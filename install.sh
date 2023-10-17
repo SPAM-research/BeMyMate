@@ -1,8 +1,5 @@
 #!/bin/sh
 
-git clone https://gitlab.com/h2282/chatagents
-cd chatagents
-
 # Install python packages
 python3 -m venv .
 source bin/activate
