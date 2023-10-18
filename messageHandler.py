@@ -29,11 +29,7 @@ class MyListener(stomp.ConnectionListener):
             del self.agents[room_id]
             print("AGENT DELETED")
         else:
-            room_id = frame.headers["subscription"]
-            self.agents[room_id].process_message(frame)
-            return
             try:
-                # print(json.dumps(json.loads(frame.body), indent=2))
                 room_id = frame.headers["subscription"]
                 self.agents[room_id].process_message(frame)
             except:
@@ -50,7 +46,7 @@ def main():
     conn.connect("admin", "admin", wait=True)
     conn.subscribe(destination="/topic/agents", id=0, ack="auto")
     while True:
-        time.sleep(60)
+        time.sleep(120)
     conn.disconnect()
 
 

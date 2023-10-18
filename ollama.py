@@ -1,15 +1,15 @@
 from langchain.chat_models import ChatOllama
 from langchain.callbacks.manager import CallbackManager
-from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler                                  
+from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.prompts.chat import ChatPromptTemplate
 from langchain.schema import BaseOutputParser
 
 
 llm = ChatOllama(
-    #model="llama2:13b-chat",
-    #model="mistral-openorca",
+    # model="llama2:13b-chat",
+    # model="mistral-openorca",
     model="llama2:7b-chat",
-    callback_manager = CallbackManager([StreamingStdOutCallbackHandler()]),
+    callback_manager=CallbackManager([StreamingStdOutCallbackHandler()]),
     temperature=0,
 )
 
@@ -33,23 +33,26 @@ problem1 = "Un grupo de estudiantes financia su viaje de fin de curso con la ven
 problem = problem4
 
 
-prompt = ChatPromptTemplate.from_messages([
-    ("system", "{instructions}"),
-    ("human", "HOLA QUE TAL"),
-    ("human", "{input}"),
-])
+prompt = ChatPromptTemplate.from_messages(
+    [
+        ("system", "{instructions}"),
+        ("human", "HOLA QUE TAL"),
+        ("human", "{input}"),
+    ]
+)
 
-#chain = prompt | llm | VarsExtractor()
+# chain = prompt | llm | VarsExtractor()
 chain = prompt | llm
 
 # OpenAI can use abatch instead
-known_vars, unknown_vars = chain.batch([
-    {"instructions": get_known_vars_instructions, "input": problem},
-    {"instructions": get_unknown_vars_instructions, "input": problem}
-])
+known_vars, unknown_vars = chain.batch(
+    [
+        {"instructions": get_known_vars_instructions, "input": problem},
+        {"instructions": get_unknown_vars_instructions, "input": problem},
+    ]
+)
 
 print("KNOWN:")
 print(known_vars)
 print("\nUNKNOWN:")
 print(unknown_vars)
-
