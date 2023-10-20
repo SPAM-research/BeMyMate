@@ -27,8 +27,8 @@ class MyListener(stomp.ConnectionListener):
         elif frame.body == "reset":
             room_id = frame.headers["subscription"]
             del self.agents[room_id]
-            print("AGENT DELETED")
         else:
+            # print(json.dumps(json.loads(frame.body), indent=2))
             try:
                 room_id = frame.headers["subscription"]
                 self.agents[room_id].process_message(frame)
