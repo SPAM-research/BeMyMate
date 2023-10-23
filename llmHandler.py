@@ -14,31 +14,19 @@ default_model = "llama2:13b-chat"
 
 class LlmHandler:
     def __init__(self):
+        self.problem = {}
         self.llm = ChatOllama(
             model=default_model,
             # callback_manager = CallbackManager([StreamingStdOutCallbackHandler()]),
             temperature=0,
         )
 
-    def set_problem_info(
-        self,
-        problem_text,
-        problem_known_quantities,
-        problem_unknown_quantities,
-        problem_graphs,
-    ):
-        self.problem_text = problem_text
-        self.problem_known_quantities = self.process_known_quantities(
-            problem_known_quantities
-        )
-        self.problem_unknown_quantities = self.process_unknown_quantities(
-            problem_unknown_quantities
-        )
-        self.problem_graphs = self.process_graphs(problem_graphs)
+    def set_problem(self, problem):
+        self.problem = problem
 
-    def set_resolution_info(self, problem_notebook, problem_equations):
-        self.problem_notebook = problem_notebook
-        self.problem_equations = problem_equations
+    def set_resolution_info(self, problem):
+        self.problem["problem_notebook"] = problem["problem_notebook"]
+        self.problem["problem_equations"] = problem["problem_equations"]
 
     def process_unknown_quantities(self, quantities):
         unknown_quantities = []

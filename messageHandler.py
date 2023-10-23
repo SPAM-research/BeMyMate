@@ -28,7 +28,10 @@ class MyListener(stomp.ConnectionListener):
             room_id = frame.headers["subscription"]
             del self.agents[room_id]
         else:
-            # print(json.dumps(json.loads(frame.body), indent=2))
+            #print(json.dumps(json.loads(frame.body), indent=2))
+            room_id = frame.headers["subscription"]
+            self.agents[room_id].process_message(frame)
+            return
             try:
                 room_id = frame.headers["subscription"]
                 self.agents[room_id].process_message(frame)
