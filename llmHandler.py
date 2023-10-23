@@ -27,6 +27,7 @@ class LlmHandler:
     def set_resolution_info(self, problem):
         self.problem["problem_notebook"] = problem["problem_notebook"]
         self.problem["problem_equations"] = problem["problem_equations"]
+        self.problem["chat"] = problem["chat"]
 
     def process_unknown_quantities(self, quantities):
         unknown_quantities = []

@@ -31,16 +31,6 @@ class MyListener(stomp.ConnectionListener):
             #print(json.dumps(json.loads(frame.body), indent=2))
             room_id = frame.headers["subscription"]
             self.agents[room_id].process_message(frame)
-            return
-            try:
-                room_id = frame.headers["subscription"]
-                self.agents[room_id].process_message(frame)
-            except:
-                print(
-                    f"UNEXPECTED ERROR FROM SUBSCRIPTION {frame.headers['subscription']}"
-                )
-                print(frame)
-                ...
 
 
 def main():
