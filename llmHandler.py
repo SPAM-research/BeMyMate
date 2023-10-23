@@ -6,6 +6,8 @@ from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.prompts.chat import ChatPromptTemplate
 from langchain.schema import BaseOutputParser
 
+from problem import Problem
+
 
 default_model = "llama2:7b-chat"
 default_model = "mistral-openorca"
@@ -13,21 +15,13 @@ default_model = "llama2:13b-chat"
 
 
 class LlmHandler:
-    def __init__(self):
-        self.problem = {}
+    def __init__(self, problem):
+        self.problem = problem
         self.llm = ChatOllama(
             model=default_model,
             # callback_manager = CallbackManager([StreamingStdOutCallbackHandler()]),
             temperature=0,
         )
-
-    def set_problem(self, problem):
-        self.problem = problem
-
-    def set_resolution_info(self, problem):
-        self.problem["problem_notebook"] = problem["problem_notebook"]
-        self.problem["problem_equations"] = problem["problem_equations"]
-        self.problem["chat"] = problem["chat"]
 
     def process_unknown_quantities(self, quantities):
         unknown_quantities = []
