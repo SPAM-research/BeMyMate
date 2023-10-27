@@ -2,10 +2,21 @@ import time
 import json
 import random
 import sys
+import requests
 
 import stomp
 
 from agent import Agent
+
+token = requests.post(
+    "https://betatutorchat.uv.es/api/login",
+    json={
+        "username": "admin2023",
+        "password": "admin2023",
+        "timeZone": "Europe/Madrid",
+        "lastConnection": 0,
+    },
+).json()["access_token"]
 
 
 class MyListener(stomp.ConnectionListener):
@@ -18,10 +29,14 @@ class MyListener(stomp.ConnectionListener):
         print(f"ERROR: {frame.body}")
 
     def on_message(self, frame):
+        #print(frame)
         if frame.body.startswith("ROOM_CREATED"):
             room_id = frame.body.split(":")[1]
             self.conn.subscribe(
-                destination="/topic/room-" + room_id, id=room_id, ack="auto"
+                destination=f"/topic/room-{room_id}",
+                id=room_id,
+                ack="client",
+                headers={"Authorization": token},
             )
             self.agents[room_id] = Agent(frame)
         elif frame.body == "reset":
@@ -29,15 +44,31 @@ class MyListener(stomp.ConnectionListener):
             del self.agents[room_id]
         else:
             # print(json.dumps(json.loads(frame.body), indent=2))
+            ...
             room_id = frame.headers["subscription"]
             self.agents[room_id].process_message(frame)
 
 
 def main():
-    conn = stomp.Connection([("localhost", 61613)], heartbeats=(4000, 4000))
+    conn = stomp.WSStompConnection(
+        [("betatutorchat.uv.es", 443)],
+        ws_path="/api/ws",
+        keepalive=True,
+        heartbeats=(40000, 40000),
+        vhost="/",
+    )
+    conn.transport.__need_ssl = lambda *args, **kwargs: True
     conn.set_listener("", MyListener(conn))
+    conn.transport._WSTransport__ssl_params[("betatutorchat.uv.es", 443)] = {}
     conn.connect("admin", "admin", wait=True)
-    conn.subscribe(destination="/topic/agents", id=0, ack="auto")
+    # conn.connect("default_user_Og9FQEwpaoJcve-oo77", "cKvTMBHgsiehcG1Ifa6QqmKOwTYobLZz", wait=True)
+    conn.transport.set_connected(True)
+    conn.subscribe(
+        destination="/topic/agents",
+        id=0,
+        ack="client",
+        headers={"Authorization": token},
+    )
     while True:
         time.sleep(120)
     conn.disconnect()

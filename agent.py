@@ -1,20 +1,17 @@
 import json
 import requests
 
-from unidecode import unidecode
-
 from llmHandler import LlmHandler
 from problem import Problem
 from user import User
 
 
-base_url = "http://localhost:8080"
+base_url = "https://betatutorchat.uv.es"
 
 """
 TODO:
-    Maybe Done - Ignore (do not process) message if agent sent the last message.
+    - Fix having to reload chat page to show message
     - Change frontend other-user icon
-    - Fix having to reaload chat page to show message
 """
 
 
@@ -22,7 +19,6 @@ class Agent:
     session = requests.Session()
     problem = Problem()
     llm_handler = LlmHandler(problem)
-    user = User()
     have_processed_first = False
 
     def __init__(self, frame):
@@ -107,7 +103,7 @@ class Agent:
     def handle_chat_message(self):
         response = self.llm_handler.call()
         response = "RESPONSE"
-        # response = "2*(x - 4 -6) = x - 6"
+        #response = "2*(x - 4 -6) = x - 6"
         if True:
             while True:
                 if (
@@ -121,24 +117,10 @@ class Agent:
             print("AGENT SENT MESSAGE")
 
     def create_user(self):
-        self.login("admin", "admin")
+        self.login("agent", "agent")
 
-        # Get new user's random info
-        while True:
-            user_info_response = self.session.get(
-                "https://randomuser.me/api/1.4/?nat=es"
-            )
-            if user_info_response.status_code == 200:
-                break
-        user_dict = json.loads(user_info_response.text)["results"][0]
-
-        # Create new user
-        self.user.username = unidecode(
-            f"{user_dict['name']['first']}_{user_dict['name']['last']}".lower()
-        )
-        self.user.email = user_dict["email"]
-        self.user.password = user_dict["login"]["sha256"]
-        self.user.sex = user_dict["gender"].title()
+        # Create random user
+        self.user = User(self.session)
 
         # Register the new user and login
         while True:
