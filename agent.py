@@ -10,8 +10,10 @@ base_url = "https://betatutorchat.uv.es"
 
 """
 TODO:
-    - Fix having to reload chat page to show message
+    - Fix having to reload chat page to show message (check if FE is only getting one message)
     - Change frontend other-user icon
+    - Get the correct response from the LLM
+    - The agent should never solve the problem ?? but if it did the problem should end
 """
 
 
@@ -41,8 +43,8 @@ class Agent:
             return
 
         if self.last_message_is_from_user():
-            print("USER MESSAGE")
-            print(self.problem.chat)
+            #print("USER MESSAGE")
+            #print(self.problem.chat)
             self.handle_chat_message()
 
     def last_message_is_from_agent(self):
@@ -69,7 +71,8 @@ class Agent:
                     json={
                         "username": username,
                         "password": password,
-                        "timeZone": "UTC",
+                        "timeZone": "Europe/Madrid",
+                        "lastConnection": 0,
                     },
                 ).status_code
                 == 200
@@ -102,8 +105,6 @@ class Agent:
 
     def handle_chat_message(self):
         response = self.llm_handler.call()
-        response = "RESPONSE"
-        #response = "2*(x - 4 -6) = x - 6"
         if True:
             while True:
                 if (
@@ -114,7 +115,7 @@ class Agent:
                     == 200
                 ):
                     break
-            print("AGENT SENT MESSAGE")
+            #print("AGENT SENT MESSAGE")
 
     def create_user(self):
         self.login("agent", "agent")
@@ -142,5 +143,4 @@ class Agent:
                 == 200
             ):
                 break
-
-        print("AGENT DELETED")
+        #print("AGENT DELETED")

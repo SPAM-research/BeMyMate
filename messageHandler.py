@@ -11,8 +11,8 @@ from agent import Agent
 token = requests.post(
     "https://betatutorchat.uv.es/api/login",
     json={
-        "username": "admin2023",
-        "password": "admin2023",
+        "username": "agent",
+        "password": "agent",
         "timeZone": "Europe/Madrid",
         "lastConnection": 0,
     },
@@ -61,7 +61,6 @@ def main():
     conn.set_listener("", MyListener(conn))
     conn.transport._WSTransport__ssl_params[("betatutorchat.uv.es", 443)] = {}
     conn.connect("admin", "admin", wait=True)
-    # conn.connect("default_user_Og9FQEwpaoJcve-oo77", "cKvTMBHgsiehcG1Ifa6QqmKOwTYobLZz", wait=True)
     conn.transport.set_connected(True)
     conn.subscribe(
         destination="/topic/agents",

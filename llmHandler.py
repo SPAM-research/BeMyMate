@@ -66,7 +66,11 @@ class LlmHandler:
         # Create the llm call
         # Call it
         # Return response
-        return "RESPONSE"
+        response = "RESPONSE"
+        response = "2*(x - 4 -6) = x - 6"
+        response = "5^2 es area"
+        response = "RESPONSE"
+        return response
         prompt = ChatPromptTemplate.from_messages(
             [
                 ("system", instr),
