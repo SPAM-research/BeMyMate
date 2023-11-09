@@ -4,55 +4,62 @@ from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.prompts.chat import ChatPromptTemplate
 from langchain.schema import BaseOutputParser
 
+"""
+    Do as told:
+        mistral:7b-instruct-fp16
+    Translators:
+        llama2:13b-chat
+"""
+
+model_to_use = "llama2:13b-chat"
+model_to_use = "vicuna:33b-q4_K_M"
+model_to_use = "orca-mini:13b-q6_K"
+model_to_use = "mistral-openorca:7b-fp16"
+model_to_use = "mistral:7b-instruct-fp16" #model_to_use = "mistral:7b-instruct"
+#model_to_use = "nous-hermes:7b-llama2-fp16"
+#model_to_use = "nous-hermes:13b-llama2-q8_0"
+
 
 llm = ChatOllama(
-    # model="llama2:13b-chat",
-    # model="mistral-openorca",
-    model="llama2:7b-chat",
+    model=model_to_use,
     callback_manager=CallbackManager([StreamingStdOutCallbackHandler()]),
-    temperature=0,
+    temperature=0.01,
 )
 
 
-class VarsExtractor(BaseOutputParser):
-    def parse(self, text: str):
-        lines = text.split("\n")
-        vars = [line.strip("*").strip() for line in lines if line.startswith("*")]
-        return vars
+enunciado = "Abigail tiene cuatro años más que Jonathan. Hace seis años ella tenía el doble de años que él. ¿Cuántos años tiene ahora Abigail?"
+enunciado = "Un terreno con forma de cuadrado tiene un lado de 5 metro. ¿Cuál es el área del terreno?"
+enunciado = "En un club de tenis tienen dos carros con 105 y 287 pelotas, respectivamente. Las van a poner en botes de 7 pelotas para utilizarlas en un torneo. ¿Cuántos botes serán necesarios?"
+enunciado = "Disponemos de dos contenedores con 396 y 117 kg de patatas, respectivamente. Para su venta, deben envasarse en bolsas que contengan 9 kg. ¿Cuántas bolsas serán necesarias?"
+notebook = ""
+equations = ""
 
+#equation_format =  "'y = <MATHEMATICAL EXPRESSION>'"
+note_format = "'y is NUMBER OF ORANGES'"
+#required_format = equation_format
+required_format = note_format
 
-get_known_vars_instructions = "Eres un asistente diseñado para extraer y enumerar las variables conocidas del problema proporcionado. No resuelva el problema, no agregue explicaciones o listas adicionales, no realice ningún cálculo y no proporcione ningún otro comentario. MUESTRA SÓLO LAS VARIABLES CONOCIDAS."
-get_known_vars_instructions = "Eres un asistente diseñado para extraer y enumerar las variables conocidas del problema proporcionado. No resuelva el problema, no agregue explicaciones o listas adicionales, no realice ningún cálculo y no proporcione ningún otro comentario. MUESTRA SÓLO LAS VARIABLES CONOCIDAS. Si el problema fuera 'Pedro y Juan han decidido vender limonadas en un día caluroso. Pedro vendió algunas limonadas a 2 euros cada una y Juan vendió las suyas a 3 euros cada una. Al final del día, Pedro y Juan habían vendido un total de 45 limonadas y habían recaudado 120 euros juntos. ¿Cuántas limonadas vendió cada uno?' deberías mostrar lo siguiente el formato '* Precio de limonadas de Pedro = 2\n* Precio de limonadas de Juan = 2'"
+# This seems to work with mistral-instruct
+instructions = f"Given a problem, your task is to pose an equation with the format {required_format} that can further the resolution of the problem. Your output should only be a equation with the format {required_format}."
+instructions = f"Given a problem, your task is to pose an equation with the format {required_format} that can further the resolution of the problem. Your output must only be a equation with the format {required_format}."
 
-get_unknown_vars_instructions = "Eres un asistente diseñado para extraer y enumerar las variables desconocidas del problema proporcionado. No resuelva el problema, no agregue explicaciones o listas adicionales, no realice ningún cálculo y no proporcione ningún otro comentario. MUESTRE SÓLO LAS VARIABLES DESCONOCIDAS SIN USAR NINGUNA INCÓGNITA."
+problem = f"""
+The problem: {enunciado}
+"""
 
-problem2 = "Pedro y Juan han decidido vender limonadas en un día caluroso. Pedro vendió algunas limonadas a 2 euros cada una y Juan vendió las suyas a 3 euros cada una. Al final del día, Pedro y Juan habían vendido un total de 45 limonadas y habían recaudado 120 euros juntos. ¿Cuántas limonadas vendió cada uno?"
-problem3 = "Lucía y Marta decidieron empezar un pequeño negocio vendiendo pulseras y collares durante el verano. El precio de cada pulsera es de 4 euros y el de cada collar es de 6 euros. En un día particular, vendieron un total de 25 ítems y recaudaron 110 euros. ¿Cuántas pulseras y cuántos collares vendieron?"
-problem4 = "En una tienda de mascotas, venden tres tipos diferentes de comida para animales: para perros, gatos y pájaros. Un día, se vendieron un total de 150 unidades entre las tres variedades. La comida para perros cuesta 3 euros la unidad, la comida para gatos cuesta 5 euros la unidad y la comida para pájaros cuesta 2 euros la unidad. Ese día, se recaudaron 500 euros en total. Si se sabe que se vendieron el mismo número de unidades de comida para perros y para gatos, ¿cuántas unidades de cada tipo de comida se vendieron?"
-problem1 = "Un grupo de estudiantes financia su viaje de fin de curso con la venta de participaciones de lotería, por importe de 1, 2 y 5 euros. Han recaudado, en total, 600 euros y han vendido el doble de participaciones de 1 euro que de 5 euros. Si han vendido un total de 260 participaciones, calcula el número de participaciones que han vendido de cada importe."
-problem = problem4
-
+#instructions = f"Your task is to translate English into Spanish. Your output must be in Spanish."
+#instructions = f"Given a sentence, your task is to translate it into Spanish. Your output must be in Spanish."
+#problem = "It's very hot."
 
 prompt = ChatPromptTemplate.from_messages(
     [
-        ("system", "{instructions}"),
-        ("human", "HOLA QUE TAL"),
-        ("human", "{input}"),
+        ("system", "{system_input}"),
+        ("human", "{human_input}"),
     ]
 )
 
-# chain = prompt | llm | VarsExtractor()
 chain = prompt | llm
 
-# OpenAI can use abatch instead
-known_vars, unknown_vars = chain.batch(
-    [
-        {"instructions": get_known_vars_instructions, "input": problem},
-        {"instructions": get_unknown_vars_instructions, "input": problem},
-    ]
-)
-
-print("KNOWN:")
-print(known_vars)
-print("\nUNKNOWN:")
-print(unknown_vars)
+output = chain.invoke({"system_input": instructions, "human_input": problem}).content
+# print(output)
+print()

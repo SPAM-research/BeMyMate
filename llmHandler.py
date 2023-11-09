@@ -1,4 +1,8 @@
 import re
+import subprocess
+import time
+import os
+import signal
 
 from langchain.chat_models import ChatOllama
 from langchain.callbacks.manager import CallbackManager
@@ -16,6 +20,8 @@ default_model = "llama2:13b-chat"
 
 class LlmHandler:
     def __init__(self, problem):
+        # Maybe make a small inference to load the model ?
+        #self.ollama_process = subprocess.Popen(["./ollama", "serve"])
         self.problem = problem
         self.llm = ChatOllama(
             model=default_model,
@@ -62,21 +68,25 @@ class LlmHandler:
         return graph_list
 
     def call(self):
-        # BIG METHOD
-        # Create the llm call
-        # Call it
-        # Return response
-        response = "RESPONSE"
-        response = "2*(x - 4 -6) = x - 6"
-        response = "5^2 es area"
-        response = "RESPONSE"
-        return response
+        #response = "RESPONSE"
+        #response = "2*(x - 4 -6) = x - 6"
+        #response = "5^2 es area"
+        #response = "RESPONSE"
+        #time.sleep(3)
+        #return response
+        
         prompt = ChatPromptTemplate.from_messages(
             [
-                ("system", instr),
-                ("human", problem),
+                #("system", instr),
+                #("human", problem),
+                ("system", "Eres un estudiante de matemáticas."),
+                ("human", self.problem.text),
             ]
         )
-        chain = prompt | llm
+        chain = prompt | self.llm
         response = chain.invoke([]).content
+        print("====ESTO====")
+        print(response)
+        time.sleep(5)
+        return "hola"
         return response
