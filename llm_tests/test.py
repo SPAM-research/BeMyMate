@@ -36,29 +36,33 @@ instructions2 = ""#i2_1
 prob_sep = "========================================"
 sec_sep =  "--------------------"
 head_sep = "####################"
+up_sep = "vvvvvvvvvvvvvvvvvvvv"
+down_sep = "^^^^^^^^^^^^^^^^^^^^"
 all_outputs = []
-total = len(problems)
 i = 1
 empty = 0
 
-for problem in problems[:5]:
+problem_set = problems[:]
+total = len(problem_set)
+
+for problem in problem_set:
     print(f"{i}/{total}")
-    output = test_problem(problem, instructions)
+    [original, output] = test_problem(problem, instructions)
     if output == "":
         if instructions2 != "":
-            output2 = test_problem(problem, instructions2)
+            [original, output2] = test_problem(problem, instructions2)
             if output2 == "":
                 empty += 1
             else:
-                all_outputs.append(f"T: {problem[0]}\nN: {problem[1]}\n{sec_sep}\n{output2}")
+                all_outputs.append(f"T: {problem[0]}\nN: {problem[1]}\n{sec_sep}\n{original}\n{up_sep}\n{output2}\n{down_sep}\n\n")
         else:
             empty += 1
     else:
-        all_outputs.append(f"T: {problem[0]}\nN: {problem[1]}\n{sec_sep}\n{output}")
+        all_outputs.append(f"T: {problem[0]}\nN: {problem[1]}\n{sec_sep}\n{original}\n{up_sep}\n{output}\n{down_sep}\n\n")
     i += 1
     os.system("clear")
 
-empty_string = f"EMPTY: {empty}/{total} ({round(empty/total*100, 2)}%)"
+empty_string = f"NOT VALID: {empty}/{total} ({round(empty/total*100, 2)}%)"
 all_outputs_string = f"\n{prob_sep}\n".join(all_outputs)
 final_string = f"INSTRUCTIONS1: \"{instructions}\"\nINSTRUCTIONS2: \"{instructions2}\"\n{head_sep}\n{empty_string}\n{head_sep}\n{all_outputs_string}"
 print(final_string)
