@@ -1,0 +1,66 @@
+from utils import test_problem
+from problems import problems
+import os
+os.system("clear")
+
+
+note_format = "variable is definition"
+equation_format = "'y = mathematical expression'"
+# required_format = equation_format
+required_format = note_format
+
+
+
+# These seem to work with mistral-instruct
+i2_1 = f"Given a problem, variable and equations, define a variable {note_format} that hasn't been defined. Do not solve the problem. Your output must only be a variable definition {note_format}. You must output something that isn't in the input."
+
+
+i1_1 = f"Given a problem, variable and equations, define a variable {note_format} that hasn't been defined. Do not solve the problem. Your output must only be a variable definition {note_format}."
+i1_2 = f"Given a problem, your task is to pose an equation with the format {required_format} that can further the resolution of the problem. Your output must only be a equation with the format {required_format}."
+i1_3 = f"Given a problem, your task is to pose a variable definition with the format {required_format} that can further the resolution of the problem. Your output must only be a variable definition with the format {required_format}."
+i1_4 = f"Given a problem and variable definitions, define a variable like {required_format} that hasn't been defined."
+i1_5 = f"Given a problem and variable definitions, define one of the unknown variables of the problem with the following format '{required_format}'."
+
+
+
+
+instructions = i1_1
+
+
+instructions2 = ""#i2_1
+
+
+
+
+
+prob_sep = "========================================"
+sec_sep =  "--------------------"
+head_sep = "####################"
+all_outputs = []
+total = len(problems)
+i = 1
+empty = 0
+
+for problem in problems[:5]:
+    print(f"{i}/{total}")
+    output = test_problem(problem, instructions)
+    if output == "":
+        if instructions2 != "":
+            output2 = test_problem(problem, instructions2)
+            if output2 == "":
+                empty += 1
+            else:
+                all_outputs.append(f"T: {problem[0]}\nN: {problem[1]}\n{sec_sep}\n{output2}")
+        else:
+            empty += 1
+    else:
+        all_outputs.append(f"T: {problem[0]}\nN: {problem[1]}\n{sec_sep}\n{output}")
+    i += 1
+    os.system("clear")
+
+empty_string = f"EMPTY: {empty}/{total} ({round(empty/total*100, 2)}%)"
+all_outputs_string = f"\n{prob_sep}\n".join(all_outputs)
+final_string = f"INSTRUCTIONS1: \"{instructions}\"\nINSTRUCTIONS2: \"{instructions2}\"\n{head_sep}\n{empty_string}\n{head_sep}\n{all_outputs_string}"
+print(final_string)
+open("results.txt", "w").write(final_string)
+
