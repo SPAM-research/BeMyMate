@@ -1,7 +1,7 @@
 from utils import test_problem
 from problems import problems
 import os
-os.system("clear")
+#os.system("clear")
 
 
 note_format = "variable is definition"
@@ -13,6 +13,7 @@ required_format = note_format
 
 # These seem to work with mistral-instruct
 i2_1 = f"Given a problem, variable and equations, define a variable {note_format} that hasn't been defined. Do not solve the problem. Your output must only be a variable definition {note_format}. You must output something that isn't in the input."
+i2_2 = f"Given a problem and some variables define a variable that hasn't been defined using the format {note_format}. Do not solve the problem. Output only the variable definition {note_format}."
 
 
 i1_1 = f"Given a problem, variable and equations, define a variable {note_format} that hasn't been defined. Do not solve the problem. Your output must only be a variable definition {note_format}."
@@ -28,6 +29,8 @@ instructions = i1_1
 
 
 instructions2 = ""#i2_1
+instructions2 = i2_1
+instructions2 = i2_1
 
 
 
@@ -42,6 +45,8 @@ all_outputs = []
 i = 1
 empty = 0
 
+ttf = 56
+problem_set = problems[ttf-1:ttf]
 problem_set = problems[:]
 total = len(problem_set)
 
@@ -54,17 +59,17 @@ for problem in problem_set:
             if output2 == "":
                 empty += 1
             else:
-                all_outputs.append(f"T: {problem[0]}\nN: {problem[1]}\n{sec_sep}\n{original}\n{up_sep}\n{output2}\n{down_sep}\n\n")
+                all_outputs.append(f"{i}\nT: {problem[0]}\nN: {problem[1]}\n{sec_sep}\n{original}\n{up_sep}\n{output2}\n{down_sep}\n\n")
         else:
             empty += 1
     else:
-        all_outputs.append(f"T: {problem[0]}\nN: {problem[1]}\n{sec_sep}\n{original}\n{up_sep}\n{output}\n{down_sep}\n\n")
+        all_outputs.append(f"{i}\nT: {problem[0]}\nN: {problem[1]}\n{sec_sep}\n{original}\n{up_sep}\n{output}\n{down_sep}\n\n")
     i += 1
-    os.system("clear")
+    #os.system("clear")
 
 empty_string = f"NOT VALID: {empty}/{total} ({round(empty/total*100, 2)}%)"
 all_outputs_string = f"\n{prob_sep}\n".join(all_outputs)
 final_string = f"INSTRUCTIONS1: \"{instructions}\"\nINSTRUCTIONS2: \"{instructions2}\"\n{head_sep}\n{empty_string}\n{head_sep}\n{all_outputs_string}"
 print(final_string)
-open("results.txt", "w").write(final_string)
+open("results/results.txt", "w").write(final_string)
 
