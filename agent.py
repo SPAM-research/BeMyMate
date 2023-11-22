@@ -43,8 +43,6 @@ class Agent:
             return
 
         if self.last_message_is_from_user():
-            #print("USER MESSAGE")
-            #print(self.problem.chat)
             self.handle_chat_message()
 
     def last_message_is_from_agent(self):
