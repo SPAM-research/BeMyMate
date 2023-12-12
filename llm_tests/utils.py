@@ -24,256 +24,6 @@ llm = ChatOllama(
     temperature=0,
 )
 
-#already_defined_variables = []
-#variable_names = ["x", "y", "z", "u", "v", "w", "a", "b", "c", "d"]
-#
-#
-#def clean_represents(i):
-#    match = re.search(r".+?(\"|\') represents.*?(?:,|\.|\n|$)", i)
-#    if match:
-#        var_name = re.search(r"(\"|\').+?(\"|\')", match.group(0)).group(0).replace('"', "").replace("'", "")
-#        definition = (
-#            re.sub(r".+? represents ", "", match.group(0))
-#            .replace(",", "")
-#            .replace("\n", "")
-#            .replace(".", "")
-#        )
-#        if var_name in already_defined_variables:
-#            return ""
-#        else:
-#            var = [v for v in variable_names if v not in already_defined_variables][0]
-#            already_defined_variables.append(var)
-#            return f"{var} is {definition}"
-#    else:
-#        return i
-#
-#
-#def clean_defined_as(i):
-#    match = re.search(r"\".+?\" can be defined as.*?(?:,|\.|\n|$)", i)
-#    if match:
-#        var_name = re.search(r"\".+?\"", match.group(0)).group(0).replace('"', "")
-#        definition = (
-#            re.sub(r"\".+?\" can be defined as ", "", match.group(0))
-#            .replace(",", "")
-#            .replace("\n", "")
-#            .replace(".", "")
-#        )
-#        if var_name in already_defined_variables:
-#            return ""
-#        else:
-#            var = [v for v in variable_names if v not in already_defined_variables][0]
-#            already_defined_variables.append(var)
-#            return f"{var} is {definition}"
-#    else:
-#        return i
-#
-#
-#def clean_let(i):
-#    match = re.search(r"Let .+? be .*?(?:,|\.|\n|$)", i)
-#    if match:
-#        var_name_aux = re.search(r"Let .+? ", match.group(0))
-#        var_name = re.search(r" .+? ", match.group(0)).group(0).replace(" ", "")
-#        definition = (
-#            re.sub(r"Let .+? be ", "", match.group(0))
-#            .replace(",", "")
-#            .replace("\n", "")
-#            .replace(".", "")
-#        )
-#        if var_name in already_defined_variables:
-#            return ""
-#        else:
-#            var = [v for v in variable_names if v not in already_defined_variables][0]
-#            already_defined_variables.append(var)
-#            return f"{var} is {definition}"
-#    else:
-#        return i
-#
-#
-#def clean_asterisk_var_colon(i):
-#    match = re.search(r"\*.+?(\"|\').+?(\"|\').*?(?:,|\.|\n|$)", i)
-#    if match:
-#        var_name = (
-#            re.search(r"\*.+?(\"|\').+?(\"|\')", match.group(0))
-#            .group(0)
-#            .replace(" ", "")
-#            .replace("*", "")
-#            .replace("'", "")
-#            .replace("\"", "")
-#        )
-#        definition = (
-#            re.sub(r"\*.+?(\"|\').+?(\"|\') is ", "", match.group(0))
-#            .replace(",", "")
-#            .replace("\n", "")
-#            .replace(".", "")
-#        )
-#        if var_name in already_defined_variables:
-#            return ""
-#        else:
-#            var = [v for v in variable_names if v not in already_defined_variables][0]
-#            already_defined_variables.append(var)
-#            return f"{var} is {definition}"
-#    else:
-#        return i
-#
-#def clean_var_colon(i):
-#    match = re.search(r"\*.+?:.*?(?:,|\.|\n|$)", i)
-#    if match:
-#        var_name = (
-#            re.search(r"\*.+?:", match.group(0))
-#            .group(0)
-#            .replace(" ", "")
-#            .replace("*", "")
-#            .replace(":", "")
-#        )
-#        definition = (
-#            re.sub(r"\*.+?: ", "", match.group(0))
-#            .replace(",", "")
-#            .replace("\n", "")
-#            .replace(".", "")
-#        )
-#        if var_name in already_defined_variables:
-#            return ""
-#        else:
-#            var = [v for v in variable_names if v not in already_defined_variables][0]
-#            already_defined_variables.append(var)
-#            return f"{var} is {definition}"
-#    else:
-#        return i
-# 
-#
-#def clean_dash_var(i):
-#    match = re.search(r"-.+?:.*?(?:,|\.|\n|$)", i)
-#    if match:
-#        var_name = (
-#            re.search(r"-.+?:", match.group(0))
-#            .group(0)
-#            .replace(" ", "")
-#            .replace("-", "")
-#            .replace(":", "")
-#        )
-#        definition = (
-#            re.sub(r"\-.+?: ", "", match.group(0))
-#            .replace(",", "")
-#            .replace("\n", "")
-#            .replace(".", "")
-#        )
-#        if var_name in already_defined_variables:
-#            return ""
-#        else:
-#            var = [v for v in variable_names if v not in already_defined_variables][0]
-#            already_defined_variables.append(var)
-#            return f"{var} is {definition}"
-#    else:
-#        return i
-#
-#def clean_var_equals(i):
-#    match = re.search(r"\*.+?=.*?(?:,|\.|\n|$)", i)
-#    if match:
-#        var_name = (
-#            re.search(r"\*.+?=", match.group(0))
-#            .group(0)
-#            .replace(" ", "")
-#            .replace("*", "")
-#            .replace("=", "")
-#        )
-#        print(var_name)
-#        definition = (
-#            re.sub(r"\*.+?= ", "", match.group(0))
-#            .replace(",", "")
-#            .replace("\n", "")
-#            .replace(".", "")
-#        )
-#        if var_name in already_defined_variables:
-#            return ""
-#        else:
-#            var = [v for v in variable_names if v not in already_defined_variables][0]
-#            return f"{var} is {definition}"
-#    else:
-#        return i
-#
-#def clean_variable_is(i):
-#    match = re.search(r"The variable (\"|\').+?(\"|\') is .*?(?:,|\.|\n|$)", i)
-#    if match:
-#        var_name = (
-#            re.search(r"(\"|\').+?(\"|\')", match.group(0))
-#            .group(0)
-#            .replace("\"", "")
-#            .replace("'", "")
-#        )
-#        definition = (
-#            re.sub(r"The variable (\"|\').+?(\"|\') is ", "", match.group(0))
-#            .replace(",", "")
-#            .replace("\n", "")
-#            .replace(".", "")
-#        )
-#        if var_name in already_defined_variables:
-#            return ""
-#        else:
-#            var = [v for v in variable_names if v not in already_defined_variables][0]
-#            already_defined_variables.append(var)
-#            return f"{var} is {definition}"
-#    else:
-#        return i
-#
-#def filter_operations(l):
-#    return (
-#        not " = " in l
-#        and not " + " in l
-#        and not " - " in l
-#        and not " * " in l
-#        and not " / " in l
-#    )
-#
-#
-#def filter_input_or_empty(l):
-#    return (
-#        not re.search(r"^\s*The problem:", l)
-#        and not re.search(r"^\s*Variables:", l)
-#        and not re.search(r"^\s*Equations:", l)
-#        and not l.startswith("```")
-#        and not l == ""
-#    )
-#
-#
-#def filter_redundant(l):
-#    return (
-#        not re.search(r"^where", l)
-#        and not ":" in l
-#        and not "=" in l
-#    )
-#
-#def filter_unwanted(l):
-#    return (
-#        not re.search(r"^\s*The variable definition for .+? is", l)
-#        and not re.search(r"^\s*The variable .+? is not defined", l)
-#        and not re.search(r"^\s*The variable that hasn't been defined is", l)
-#        and re.search(r"[a-zA-Z]", l)
-#        and not "?" in l
-#        and not l.startswith("The problem")
-#        and not l.startswith("*")
-#        and not l.startswith("-")
-#    )
-#
-#
-#
-#
-#def no_numbers_operators_or_definitions(i):
-#    return (
-#        not "=" in i
-#        and not "ariable definition" in i
-#        and not re.search(r"[0-9]", i)
-#    )
-#
-#def remove_beginning_whitespaces(l):
-#    return re.sub(r"^\s*", "", l)
-
-
-
-"""
-######################################################################################################################################
-######################################################################################################################################
-######################################################################################################################################
-"""
 
 already_defined_vars = ["x"]
 variable_names = list(string.ascii_lowercase)
@@ -304,12 +54,6 @@ def substitute_multicharacter_variables(original_equations, original_explanation
     usable_var_names = [v for v in variable_names if not v in monochar_variables and not v in already_defined_vars]
     random.shuffle(usable_var_names)
     
-    #print(equations)
-    #print("----------------")
-    #print(explanation)
-    #print("----------------")
-    #print(multichar_variables)
-
     for m in multichar_variables:
         v = usable_var_names.pop()
         equations = equations.replace(m, v)
@@ -355,8 +99,6 @@ def clean_let(i):
     else:
         return i
 
-
-
 def clean_redundant(list_in):
     monochar_definitions = [d for d in list_in if re.match(r"^[a-z_] is .*", d)]
     multichar_definitions = [d for d in list_in if re.match(r"^[a-z_]{2,} is .*", d)]
@@ -396,18 +138,6 @@ def is_well_formed(l):
     except SympifyError:
         return False
 
-def clean_messy_equations(equations, explanation):
-    equations = list(filter(is_well_formed, equations))
-    explanation = list(filter(lambda l: re.search(r"^[a-z] is .+", l), explanation))
-    used_vars = []
-    for eq in equations:
-        match = re.findall("[a-z]", eq)
-        for m in match:
-            used_vars.append(m)
-    used_vars = list(set(used_vars))
-    explanation = list(filter(lambda e: e[0] in used_vars, explanation))
-    return [equations, explanation]
-
 def test_problem(problem, instructions):
     problem_text = problem[0]
     notebook = problem[1]
@@ -446,9 +176,6 @@ def test_problem(problem, instructions):
     equations = list(map(lambda l: l.replace("\\", ""), equations))
     
     explanation = list(filter(lambda l: not is_equation(l), output_lines))
-    #explanation = [l for l in output_lines if not "=" in l]
-    #explanation = list(filter(lambda e: not "equation represents" in e, explanation))
-    #explanation = list(filter(lambda e: not "This equation" in e, explanation))
 
     [equations, explanation] = substitute_multicharacter_variables(equations, explanation)
 
@@ -465,7 +192,6 @@ def test_problem(problem, instructions):
     explanation = "\n".join(explanation).splitlines()
     explanation = list(filter(lambda e: ":" not in e, explanation))
     explanation = clean_redundant(explanation)
-    #[equations, explanation] = clean_messy_equations(equations, explanation)
     explanation = list(filter(lambda e: re.search(r"^[a-z] is", e), explanation))
     
     equations = "\n".join(list(filter(lambda e: e != "", equations)))
