@@ -5,15 +5,18 @@ from langchain.prompts.chat import ChatPromptTemplate
 from langchain.schema import BaseOutputParser
 
 import re
+import string
+import argostranslate.translate
+
 
 
 already_defined_variables = []
-variable_names = ["x", "y", "z", "u", "v", "w", "a", "b", "c", "d"]
+variable_names = list(string.ascii_lowercase)
 
 note_format = "variable is definition"
 instructions = [
-    f"Given a problem, variable and equations, define a variable {note_format} that hasn't been defined. Do not solve the problem. Your output must only be a variable definition {note_format}.",
-    f"Given a problem, variable and equations, define a variable {note_format} that hasn't been defined. Do not solve the problem. Your output must only be a variable definition {note_format}. You must output something that isn't in the input.",
+    f"Given a problem, variables and equations, define a variable {note_format} that hasn't been defined. Do not solve the problem. Your output must only be a variable definition {note_format}.",
+    f"Given a problem, variables and equations, define a variable {note_format} that hasn't been defined. Do not solve the problem. Your output must only be a variable definition {note_format}. You must output something that isn't in the input.",
     f"Given a problem and some variables define a variable that hasn't been defined using the format {note_format}. Do not solve the problem. Output only the variable definition {note_format}.",
     f"Define a variable that hasn't been defined using the format {note_format}. Do not solve the problem. Output only the variable definition {note_format}.",
     f"Define a variable that hasn't been defined using the format {note_format} without solving the problem.",
@@ -23,7 +26,6 @@ instructions = [
 
 
 def get_variable_definition(llm, problem):
-    #return "HAHAHA"
     i = 0
     while True:
         if i >= len(instructions):
@@ -31,6 +33,7 @@ def get_variable_definition(llm, problem):
             break
         output = get_llm_output(llm, problem, instructions[i])
         if output != "":
+            #return "No sé que hacer..."
             break
         i += 1
     return clean_output(problem, output)
@@ -63,7 +66,6 @@ def clean_output(problem, output):
 
     global already_defined_variables
     already_defined_variables = [e[0] for e in problem.notebook]
-    #already_defined_variables = get_already_defined_variables(notebook)
     
     cleaned = output_lines
     cleaned = list(map(remove_beginning_whitespaces, cleaned))
@@ -80,29 +82,11 @@ def clean_output(problem, output):
     cleaned = list(filter(filter_unwanted, cleaned))
     cleaned = list(filter(filter_input_or_empty, cleaned))
 
-    return "\n".join(cleaned)
+    joined = "\n".join(cleaned)
+    translated = argostranslate.translate.translate(joined, "en", "es")
+    output = translated.lower()
 
-    #removed_input_and_empty = list(filter(filter_input_or_empty, cleaned))
-
-    #""" #############################
-    #    ##   BE CAREFUL WITH THIS  ##
-    #    ############################# """
-    ##removed_input_and_empty = list(filter(no_numbers_operators_or_definitions, removed_input_and_empty))
-
-    #cleaned_output = "\n".join(removed_input_and_empty)
-
-    #return cleaned_output
-
-
-#def get_already_defined_variables(nb):
-#    return [e[0] for e in entries]
-#    #defined_variables = []
-#    #if nb != "":
-#    #    entries = nb.split(", ")
-#    #    defined_variables = [e[0] for e in entries]
-#    #already_defined_variables = defined_variables
-#    #return defined_variables
-
+    return output
 
 
 
@@ -336,15 +320,6 @@ def filter_unwanted(l):
         and not l.startswith("-")
     )
 
-
-
-
-#def no_numbers_operators_or_definitions(i):
-#    return (
-#        not "=" in i
-#        and not "ariable definition" in i
-#        and not re.search(r"[0-9]", i)
-#    )
 
 def remove_beginning_whitespaces(l):
     return re.sub(r"^\s*", "", l)

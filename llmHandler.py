@@ -19,16 +19,6 @@ default_model = "mistral-openorca"
 default_model = "llama2:13b-chat"
 default_model = "mistral:7b-instruct-fp16"
 
-#note_format = "variable is definition"
-#get_variable_definition_instructions = [
-#    f"Given a problem, variable and equations, define a variable {note_format} that hasn't been defined. Do not solve the problem. Your output must only be a variable definition {note_format}.",
-#    f"Given a problem, variable and equations, define a variable {note_format} that hasn't been defined. Do not solve the problem. Your output must only be a variable definition {note_format}. You must output something that isn't in the input.",
-#    f"Given a problem and some variables define a variable that hasn't been defined using the format {note_format}. Do not solve the problem. Output only the variable definition {note_format}.",
-#    f"Define a variable that hasn't been defined using the format {note_format}. Do not solve the problem. Output only the variable definition {note_format}.",
-#    f"Define a variable that hasn't been defined using the format {note_format} without solving the problem.",
-#    f"Your task is to define a variable with the format '{note_format}' without solving the problem.",
-#    f"Define a variable with the format '{note_format}' without solving the problem.",
-#]
 
 class LlmHandler:
     def __init__(self, problem):
