@@ -18,7 +18,6 @@ token = requests.post(
     },
 ).json()["access_token"]
 
-
 class MyListener(stomp.ConnectionListener):
     def __init__(self, connection, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -29,8 +28,8 @@ class MyListener(stomp.ConnectionListener):
         print(f"ERROR: {frame.body}")
 
     def on_message(self, frame):
-        #print(frame)
         if frame.body.startswith("ROOM_CREATED"):
+            print("ROOM CREATED")
             room_id = frame.body.split(":")[1]
             self.conn.subscribe(
                 destination=f"/topic/room-{room_id}",
@@ -43,7 +42,6 @@ class MyListener(stomp.ConnectionListener):
             room_id = frame.headers["subscription"]
             del self.agents[room_id]
         else:
-            # print(json.dumps(json.loads(frame.body), indent=2))
             room_id = frame.headers["subscription"]
             self.agents[room_id].process_message(frame)
 

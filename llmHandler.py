@@ -3,6 +3,7 @@ import subprocess
 import time
 import os
 import signal
+import random
 
 from langchain.chat_models import ChatOllama
 from langchain.callbacks.manager import CallbackManager
@@ -10,68 +11,43 @@ from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.prompts.chat import ChatPromptTemplate
 from langchain.schema import BaseOutputParser
 
-from problem import Problem
-from variable_definition import get_variable_definition
+import argostranslate.translate
 
-
-default_model = "llama2:7b-chat"
-default_model = "mistral-openorca"
-default_model = "llama2:13b-chat"
-default_model = "mistral:7b-instruct-fp16"
-
+from llm_responder import get_llm_response
 
 class LlmHandler:
     def __init__(self, problem):
         # Maybe make a small inference to load the model ?
         #self.ollama_process = subprocess.Popen(["./ollama", "serve"])
         self.problem = problem
+        self.outputs = []
         self.llm = ChatOllama(
-            model=default_model,
+            model="mistral:7b-instruct-fp16",
             #callback_manager = CallbackManager([StreamingStdOutCallbackHandler()]),
             temperature=0,
         )
 
     def call(self):
-        # Random do get_variable, get_equation or get message
-        #response = self.get_variable_definition()
-        response = get_variable_definition(self.llm, self.problem)
+        print("CALLING LLM")
+        [equations, definitions] = get_llm_response(self.llm, self.problem)
+        print(f"DEFS: {definitions}")
+        print(f"EQS: {equations}")
+
+        # Random do get equation, definition or message
+        new_definitions = [d for d in definitions if d not in self.outputs]
+        new_equations = [e for e in equations if e not in self.outputs]
+        print(f"NEW DEFS: {new_definitions}")
+        print(f"NEW EQS: {new_equations}")
+
+        if new_definitions:
+            selected = random.choice(new_definitions)
+            response = argostranslate.translate.translate(selected, "en", "es")
+            self.outputs.append(response)
+        elif new_equations:
+            response = random.choice(new_equations)
+            self.outputs.append(response)
+        else: 
+            response = "No sé que hacer"
+
+        print(f"RESPONSE: {response}")
         return response
-
-
-    #def process_unknown_quantities(self, quantities):
-    #    unknown_quantities = []
-    #    for q in quantities:
-    #        name = q["name"]
-    #        description = re.search(r"text=(.*?), language", q["description"]).group(1)
-    #        unknown_quantities.append({"name": name, "description": description})
-    #    return unknown_quantities
-
-    #def process_known_quantities(self, quantities):
-    #    known_quantities = []
-    #    for q in quantities:
-    #        name = q["name"]
-    #        description = re.search(r"text=(.*?), language", q["description"]).group(1)
-    #        value = q["value"]
-    #        known_quantities.append(
-    #            {"name": name, "description": description, "value": value}
-    #        )
-    #    return known_quantities
-
-    #def process_graphs(self, graphs):
-    #    graph_list = []
-    #    for g in graphs:
-    #        path_list = []
-    #        for p in g["paths"]:
-    #            match p["type"]:
-    #                case "Addition":
-    #                    op = "' + '"
-    #                case "Subtraction":
-    #                    op = "' - '"
-    #                case "Multiplication":
-    #                    op = "' * '"
-    #                case "Division":
-    #                    op = "' / '"
-    #            path = f"'{p['result']}' = '{op.join(p['nodes'])}'"
-    #            path_list.append(path)
-    #        graph_list.append(path_list)
-    #    return graph_list

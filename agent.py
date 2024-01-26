@@ -10,9 +10,7 @@ base_url = "https://betatutorchat.uv.es"
 
 """
 TODO:
-    - Fix having to reload chat page to show message (check if FE is only getting one message)
     - Change frontend other-user icon
-    - Get the correct response from the LLM
     - The agent should never solve the problem ?? but if it did the problem should end
 """
 
@@ -76,6 +74,7 @@ class Agent:
                 == 200
             ):
                 break
+        #print(f"LOGGED IN AS {username}")
 
     def get_problem_info(self, body):
         problem_id = body["problem"]["id"]
@@ -130,6 +129,7 @@ class Agent:
                 == 200
             ):
                 break
+        #print("CREATED NEW TEMPORARY USER")
         self.login(self.user.username, self.user.password)
 
     def __del__(self):
@@ -141,4 +141,4 @@ class Agent:
                 == 200
             ):
                 break
-        #print("AGENT DELETED")
+        print("AGENT DELETED")
