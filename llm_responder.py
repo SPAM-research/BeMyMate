@@ -116,11 +116,30 @@ def remove_parenthesis(e):
 def is_equation(l):
     return "=" in l
 
+def construct_chat_history(chat):
+    return "\n".join([e["message"] for e in chat[-6:] if e["sender"]=="system"])
+    output = ""
+    for e in chat:
+        output += f"{e['sender']}: {e['message']}\n"
+    print(output)
+    return output
+
+
 def get_llm_response(llm, problem):
+    #problem_layout = f"""
+    #The problem: '{problem.text}'
+    #Variables: '{", ".join(problem.notebook)}'
+    #Equations: '{", ".join(problem.equations)}'
+    #Last message: '{problem.chat[-1]["message"]}'
+    #"""
+
+    ch = construct_chat_history(problem.chat)
+    print(ch)
     problem_layout = f"""
     The problem: '{problem.text}'
     Variables: '{", ".join(problem.notebook)}'
     Equations: '{", ".join(problem.equations)}'
+    Last tutor messages: '{ch}'
     """
 
     prompt = ChatPromptTemplate.from_messages([

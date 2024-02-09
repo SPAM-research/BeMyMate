@@ -38,6 +38,7 @@ class Agent:
             self.get_problem_info(body)
 
         if self.last_message_is_from_agent():
+            self.handle_chat_message()
             return
 
         if self.last_message_is_from_user():

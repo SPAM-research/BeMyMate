@@ -30,24 +30,27 @@ class LlmHandler:
     def call(self):
         print("CALLING LLM")
         [equations, definitions] = get_llm_response(self.llm, self.problem)
-        print(f"DEFS: {definitions}")
-        print(f"EQS: {equations}")
+        #print(f"DEFS: {definitions}")
+        #print(f"EQS: {equations}")
 
         # Random do get equation, definition or message
-        new_definitions = [d for d in definitions if d not in self.outputs]
+        new_definitions = [d.lower() for d in definitions if d[2:].lower() not in self.outputs]
         new_equations = [e for e in equations if e not in self.outputs]
-        print(f"NEW DEFS: {new_definitions}")
-        print(f"NEW EQS: {new_equations}")
+        #print(f"NEW DEFS: {new_definitions}")
+        #print(f"NEW EQS: {new_equations}")
 
         if new_definitions:
             selected = random.choice(new_definitions)
             response = argostranslate.translate.translate(selected, "en", "es")
-            self.outputs.append(response)
+            self.outputs.append(selected[2:].lower())
+            print(f"NEW DEFS: {new_definitions}")
+            print(f"OUTPUTS: {self.outputs}")
         elif new_equations:
             response = random.choice(new_equations)
             self.outputs.append(response)
         else: 
-            response = "No sé que hacer"
+            response = "Necesito ayuda"
 
+        time.sleep(3)
         print(f"RESPONSE: {response}")
         return response

@@ -10,6 +10,7 @@ from agent import Agent
 
 token = requests.post(
     "https://betatutorchat.uv.es/api/login",
+    #"https://tutorchat.uv.es/api/login",
     json={
         "username": "agent",
         "password": "agent",
@@ -49,6 +50,7 @@ class MyListener(stomp.ConnectionListener):
 def main():
     conn = stomp.WSStompConnection(
         [("betatutorchat.uv.es", 443)],
+        #[("tutorchat.uv.es", 443)],
         ws_path="/api/ws",
         keepalive=True,
         heartbeats=(40000, 40000),
@@ -57,6 +59,7 @@ def main():
     conn.transport.__need_ssl = lambda *args, **kwargs: True
     conn.set_listener("", MyListener(conn))
     conn.transport._WSTransport__ssl_params[("betatutorchat.uv.es", 443)] = {}
+    #conn.transport._WSTransport__ssl_params[("tutorchat.uv.es", 443)] = {}
     conn.connect("admin", "admin", wait=True)
     conn.transport.set_connected(True)
     conn.subscribe(
