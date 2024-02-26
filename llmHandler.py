@@ -51,6 +51,5 @@ class LlmHandler:
         else: 
             response = "Necesito ayuda"
 
-        time.sleep(3)
         print(f"RESPONSE: {response}")
         return response

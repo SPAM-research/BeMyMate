@@ -1,9 +1,12 @@
 import json
 import requests
+import time
+import re
 
 from llmHandler import LlmHandler
 from problem import Problem
 from user import User
+from utils import last_message_is_clarification, get_message_for_clarification, last_message_is_suggestion, get_message_for_suggestion
 
 
 base_url = "https://betatutorchat.uv.es"
@@ -34,31 +37,42 @@ class Agent:
         self.get_resolution_info(body)
 
         new_problem_id = body["problem"]["id"]
+
         if self.problem.id != new_problem_id:
             self.get_problem_info(body)
+        
 
-        if self.last_message_is_from_agent():
-            self.handle_chat_message()
-            return
-
-        if self.last_message_is_from_user():
-            self.handle_chat_message()
-
-    def last_message_is_from_agent(self):
-        sender = self.problem.chat[-2]["sender"]
-        username = self.user.username
-        if sender == username:
-            return True
+        #time.sleep(3)
+        response = "LOL NO"
+        #if not self.have_processed_first:
+        #    self.send_message("Hola")
+        if not self.last_message_is_from_tutor():
+            ...
+        elif last_message_is_clarification(self.problem):
+            #self.send_message(get_message_for_clarification(self.problem))
+            response = get_message_for_clarification(self.problem)
+        elif last_message_is_suggestion(self.problem):
+            #self.send_message(get_message_for_suggestion(self.problem))
+            response = get_message_for_suggestion(self.problem)
         else:
-            return False
+            #response = self.llm_handler.call()
+            response = "NOPE"
+            #self.send_message(response)
+            #print("###############################")
 
-    def last_message_is_from_user(self):
-        sender = self.problem.chat[-2]["sender"]
-        username = self.user.username
-        if sender != username and sender != "system":
-            return True
+        print(f"LLM RESPONSE: {response}")
+        opt = input("DEFAULT?")
+        if opt == "":
+            self.send_message(response)
         else:
-            return False
+            self.send_message(opt)
+
+        print("\n\n\n\n\n\n\n\n")
+        #self.have_processed_first = True
+        #print("DONE PROCESSING MESSAGE")
+            
+    def last_message_is_from_tutor(self):
+        return self.problem.chat[-1]["sender"] == "system"
 
     def login(self, username, password):
         while True:
@@ -99,24 +113,34 @@ class Agent:
         self.problem.text = body["problem"]["text"]
         self.problem.notebook = body["notebook"]
         self.problem.equations = body["equations"]
-        self.problem.chat = body["chat"]
+        self.problem.chat = [{"sender": c["sender"], "message": self.clean_chat_message(c["message"])} for c in body["chat"]]
+        last_clean_message = self.problem.chat[-1]['message']
+        last_original_message = body['chat'][-1]['message'].replace('\r','')
+        print(f"LAST ORIGINAL MESSAGE: {last_original_message}")
+        print(f"LAST CLEAN MESSAGE: {last_clean_message}")
+    
+    def clean_chat_message(self, message):
+        print(f"INCLEAN ORIG: {message}")
+        message = message.replace("\r", "")
+        print(f"INCLEAN AFTER: {message}")
+        message = re.sub(r"<br.*?>", "\n", message)
+        return message
 
-    def handle_chat_message(self):
-        response = self.llm_handler.call()
-        if True:
-            while True:
-                if (
-                    self.session.put(
-                        f"{base_url}/api/chat/{self.room_id}",
-                        json={"message": response, "variable": "variable"},
-                    ).status_code
-                    == 200
-                ):
-                    break
-            #print("AGENT SENT MESSAGE")
+    def send_message(self, message):
+        while True:
+            if (
+                self.session.put(
+                    f"{base_url}/api/chat/{self.room_id}",
+                    json={"message": message, "variable": "variable"},
+                ).status_code
+                == 200
+            ):
+                break
+        #print("AGENT SENT MESSAGE")
 
     def create_user(self):
         self.login("agent", "agent")
+        return
 
         # Create random user
         self.user = User(self.session)

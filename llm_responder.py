@@ -13,7 +13,8 @@ import random
 already_defined_vars = []
 variable_regex="[\"\'`]?(?P<variable>[a-zA-Z_\(\)\|]+?)[\"\'`]"
 ending_regex = "(?:,|\(|\.|:|\n|$| and)"
-instructions = "Given a problem, variables and equations, define an equation that hasn't been defined. Do not solve the problem. Your output must only be an equation. Use '*' as the multiplication operator.",
+instructions = "Given a problem, variables and equations, define an equation that hasn't been defined. Do not solve the problem. Your output must only be an equation. Use '*' as the multiplication operator."
+instructions = "Given a problem, variables and equations, define an equation that hasn't been defined. Do not solve the problem. Your output must only be an equation. Use '*' as the multiplication operator. Follow the suggestion."
 
 
 def get_already_defined_variables(nb):
@@ -121,7 +122,7 @@ def construct_chat_history(chat):
     output = ""
     for e in chat:
         output += f"{e['sender']}: {e['message']}\n"
-    print(output)
+    #print(output)
     return output
 
 
@@ -134,12 +135,11 @@ def get_llm_response(llm, problem):
     #"""
 
     ch = construct_chat_history(problem.chat)
-    print(ch)
     problem_layout = f"""
     The problem: '{problem.text}'
     Variables: '{", ".join(problem.notebook)}'
     Equations: '{", ".join(problem.equations)}'
-    Last tutor messages: '{ch}'
+    Suggestion: '{problem.chat[-1]["message"]}'
     """
 
     prompt = ChatPromptTemplate.from_messages([
