@@ -30,8 +30,8 @@ class MyListener(stomp.ConnectionListener):
 
     def on_message(self, frame):
         if frame.body.startswith("ROOM_CREATED"):
-            print("ROOM CREATED")
             room_id = frame.body.split(":")[1]
+            print(f"ROOM CREATED: {room_id}")
             self.conn.subscribe(
                 destination=f"/topic/room-{room_id}",
                 id=room_id,
@@ -69,7 +69,7 @@ def main():
         headers={"Authorization": token},
     )
     while True:
-        time.sleep(120)
+        time.sleep(20)
     conn.disconnect()
 
 

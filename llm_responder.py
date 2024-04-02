@@ -38,7 +38,8 @@ def substitute_multicharacter_variables(original_equations, original_explanation
     multichar_variables = [v for v in matches if len(v) > 1 and not v.startswith("p(")]
     monochar_variables = [v for v in matches if len(v) == 1]
     
-    usable_var_names = [v for v in list(string.ascii_lowercase) if not v in monochar_variables and not v in already_defined_vars]
+    #usable_var_names = [v for v in list(string.ascii_lowercase) if not v in monochar_variables and not v in already_defined_vars]
+    usable_var_names = [v for v in list(string.ascii_lowercase) if v not in already_defined_vars]
     random.shuffle(usable_var_names)
     
     for m in multichar_variables:
@@ -130,7 +131,7 @@ def get_llm_response(llm, problem):
     #problem_layout = f"""
     #The problem: '{problem.text}'
     #Variables: '{", ".join(problem.notebook)}'
-    #Equations: '{", ".join(problem.equations)}'
+    #Equations: '{", ".joiCANTIDAD DE DÓLARES QUE LE QUEDABAN A SUSANAn(problem.equations)}'
     #Last message: '{problem.chat[-1]["message"]}'
     #"""
 
@@ -152,6 +153,9 @@ def get_llm_response(llm, problem):
     llm_output = chain.invoke(
         {"system_input": instructions, "human_input": problem_layout}
     ).content
+    print("########################")
+    print(llm_output)
+    print("########################")
 
     preprocessed = unidecode(llm_output)
     preprocessed = preprocessed.replace(":", ":\n")
@@ -165,7 +169,7 @@ def get_llm_response(llm, problem):
     output_lines = list(map(remove_formatting, output_lines))
 
     equations = list(filter(is_equation, output_lines))
-    equations = list(map(lambda l: l.replace("\\", ""), equations))
+    #equations = list(map(lambda l: l.replace("\\", ""), equations))
     
     explanation = list(filter(lambda l: not is_equation(l), output_lines))
 
@@ -179,6 +183,7 @@ def get_llm_response(llm, problem):
     equations = list(map(lambda l: re.sub(r"^\*\s*", "", l), equations))
     equations = list(map(lambda l: re.sub(r"^-\s*", "", l), equations))
     equations = list(map(lambda l: re.sub(r"\*$", "", l), equations))
+    equations = list(map(lambda l: l.replace("'", ""), equations))
     
     explanation = "\n".join(explanation).splitlines()
     explanation = list(filter(lambda e: ":" not in e, explanation))
@@ -190,6 +195,15 @@ def get_llm_response(llm, problem):
     equations = list(filter(lambda e: e != "", equations))
     explanation = list(filter(lambda e: e != "", explanation))
     explanation = list(map(lambda e: e.replace("_", " ".lower()), explanation))
+    explanation = list(map(lambda e: e.replace("'", "".lower().strip()), explanation))
+
+    usable_vars = [v for v in list(string.ascii_lowercase) if v not in already_defined_vars]
+    explanation = list(map(lambda e: e if e[0] not in already_defined_vars else usable_vars.pop()+e[1:], explanation))
+    
+    aux = []
+    for e in equations:
+        aux+=e.split(",")
+    equations = aux
 
     return [equations, explanation]
     

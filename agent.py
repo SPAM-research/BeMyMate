@@ -23,6 +23,8 @@ class Agent:
     problem = Problem()
     llm_handler = LlmHandler(problem)
     have_processed_first = False
+    steps = 0
+    helps = 0
 
     def __init__(self, frame):
         self.room_id = frame.body.split(":")[1]
@@ -43,7 +45,7 @@ class Agent:
         
 
         #time.sleep(3)
-        response = "LOL NO"
+        #response = "LOL NO"
         #if not self.have_processed_first:
         #    self.send_message("Hola")
         if not self.last_message_is_from_tutor():
@@ -54,20 +56,23 @@ class Agent:
         elif last_message_is_suggestion(self.problem):
             #self.send_message(get_message_for_suggestion(self.problem))
             response = get_message_for_suggestion(self.problem)
+            if response == "<CALL LLM>": response = self.llm_handler.call()
         else:
-            #response = self.llm_handler.call()
-            response = "NOPE"
+            response = self.llm_handler.call()
+            #response = "NOPE"
             #self.send_message(response)
             #print("###############################")
 
-        print(f"LLM RESPONSE: {response}")
+        print(f"AGENT RESPONSE: {response}")
         opt = input("DEFAULT?")
-        if opt == "":
-            self.send_message(response)
-        else:
-            self.send_message(opt)
+        if opt != "":
+            response = opt
+        self.send_message(response.strip())
 
-        print("\n\n\n\n\n\n\n\n")
+        if not re.search(r"[0-9]|si", response.lower()): self.steps+=1
+        if re.search(r"ayuda", response.lower()): self.helps+=1
+        print("\n\n\n\n\n\n\n")
+        print(f"STEPS: {self.steps}\tHELPS: {self.helps}\tVARS: {len(self.problem.notebook)}/{len(self.problem.unknown_quantities)}\t EQS: {len(self.problem.equations)}/{len(self.problem.graphs[0]['paths'])}")
         #self.have_processed_first = True
         #print("DONE PROCESSING MESSAGE")
             
@@ -114,15 +119,16 @@ class Agent:
         self.problem.notebook = body["notebook"]
         self.problem.equations = body["equations"]
         self.problem.chat = [{"sender": c["sender"], "message": self.clean_chat_message(c["message"])} for c in body["chat"]]
+        #self.problem.chat[-1]["message"] = self.clean_chat_message(input("TUTOR MESSAGE: "))
         last_clean_message = self.problem.chat[-1]['message']
-        last_original_message = body['chat'][-1]['message'].replace('\r','')
-        print(f"LAST ORIGINAL MESSAGE: {last_original_message}")
+        #last_original_message = body['chat'][-1]['message'].replace('\r','')
+        #print(f"LAST ORIGINAL MESSAGE: {last_original_message}")
         print(f"LAST CLEAN MESSAGE: {last_clean_message}")
     
     def clean_chat_message(self, message):
-        print(f"INCLEAN ORIG: {message}")
+        #print(f"INCLEAN ORIG: {message}")
         message = message.replace("\r", "")
-        print(f"INCLEAN AFTER: {message}")
+        #print(f"INCLEAN AFTER: {message}")
         message = re.sub(r"<br.*?>", "\n", message)
         return message
 
