@@ -1,4 +1,4 @@
-from langchain.chat_models import ChatOllama
+from langchain_community.chat_models import ChatOllama
 from langchain.callbacks.manager import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.prompts.chat import ChatPromptTemplate
@@ -153,9 +153,6 @@ def get_llm_response(llm, problem):
     llm_output = chain.invoke(
         {"system_input": instructions, "human_input": problem_layout}
     ).content
-    print("########################")
-    print(llm_output)
-    print("########################")
 
     preprocessed = unidecode(llm_output)
     preprocessed = preprocessed.replace(":", ":\n")

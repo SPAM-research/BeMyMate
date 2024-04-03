@@ -5,7 +5,7 @@ import os
 import signal
 import random
 
-from langchain.chat_models import ChatOllama
+from langchain_community.chat_models import ChatOllama
 from langchain.callbacks.manager import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.prompts.chat import ChatPromptTemplate
@@ -24,8 +24,8 @@ class LlmHandler:
         self.definitions = []
         self.equations = []
         self.llm = ChatOllama(
-            #model="mistral:7b-instruct-fp16",
-            model="stable-beluga:13b-fp16",
+            model="mistral:7b-instruct-fp16",
+            #model="stable-beluga:13b-fp16",
             #model="mixtral:8x7b-instruct-v0.1-q3_K_L",
             #callback_manager = CallbackManager([StreamingStdOutCallbackHandler()]),
             temperature=0,
