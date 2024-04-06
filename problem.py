@@ -1,9 +1,11 @@
 class Problem:
     id = -1
+    name = ""
     text = ""
     chat = []
     known_quantities = []
     unknown_quantities = []
+    last_suggestion = ""
     graphs = []
     notebook = []
     equations = []
@@ -11,6 +13,7 @@ class Problem:
     def __str__(self):
         return {
             "id": self.id,
+            "name": self.name,
             "text": self.text,
             "chat": self.chat,
             "known_quantities": self.known_quantities,

@@ -52,7 +52,7 @@ class LlmHandler:
 #            response = "Necesito ayuda"
 #        
 #        return response
-        print("CALLING LLM")
+        #print("CALLING LLM")
         [equations, definitions] = get_llm_response(self.llm, self.problem)
         #print(f"DEFS: {definitions}")
         #print(f"EQS: {equations}")

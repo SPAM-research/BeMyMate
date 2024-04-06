@@ -140,9 +140,10 @@ def get_llm_response(llm, problem):
     The problem: '{problem.text}'
     Variables: '{", ".join(problem.notebook)}'
     Equations: '{", ".join(problem.equations)}'
-    Suggestion: '{problem.chat[-1]["message"]}'
+    Suggestion: '{problem.last_suggestion}'
     """
 
+    #print(f"\n{problem_layout}\n")
     prompt = ChatPromptTemplate.from_messages([
         ("system", "{system_input}"),
         ("human", "{human_input}"),
