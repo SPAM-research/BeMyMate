@@ -21,6 +21,12 @@ max_resolutions = 10
 max_resolutions = 1
 debug = False
 
+
+problemas100 = [0, 2, 5, 19, 20, 21, 22, 27, 28, 29, 30, 31, 32, 33, 34, 36, 37, 38, 39, 40, 41, 42, 43, 53, 54, 57, 69, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 82, 83, 84, 85, 87, 88, 98, 100, 101, 102, 108, 109, 110, 111, 112, 113, 114, 119, 120, 121, 124, 126, 128, 129, 130, 131, 132, 133, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 161, 171, 174, 180, 181, 182, 183, 184, 185, 186]
+problemas20 = [0, 2, 5, 19, 20, 21, 22, 27, 28, 29, 30, 31, 32, 33, 34, 36, 37, 38, 39, 40] 
+
+
+
 class FakeUser:
     def __init__(self, problem_in_wrapper):
         if debug: print("INIT")
@@ -276,8 +282,7 @@ def main():
     driver = webdriver.Chrome(options=chrome_options)
     login()
     results = []
-    problemas = [0, 2, 5, 19, 20, 21, 22, 27, 28, 29, 30, 31, 32, 33, 34, 36, 37, 38, 39, 40] 
-    for p in problemas:
+    for p in problemas20:
         fu = FakeUser(p)
         problem = {
             "name": fu.problem.name,
