@@ -2,6 +2,19 @@ import re
 import string
 import random
 
+def get_definition_block_variable(problem):
+    last_message = problem.chat[-1]["message"]
+    variable = ""
+    if match := re.search(r"Espero una descripción para la letra (?P<var>.)", last_message):
+        variable = match.group("var")
+    elif match := re.search(r"denotar mediante la letra (?P<var>.)", last_message):
+        variable = match.group("var")
+    elif match := re.search(r"descripci.n .*para la letra (?P<var>.)", last_message):
+        variable = match.group("var")
+    elif match := re.search(r"cantidad quieres nombrar mediante la letra (?P<var>.)", last_message):
+        variable = match.group("var")
+    return variable
+
 def last_message_is_clarification(problem):
     return problem.chat[-1]["message"].startswith("Querías referirte a:")
 
@@ -47,7 +60,8 @@ def get_message_for_suggestion(problem):
         #print("HANDLING FOURTH SUGGESTION")
         return "Si"
     elif match := re.search("Te sugiero definir una letra para denotar la cantidad (?P<var>.+)", last_message):
-        print("HANDLING FIFTH SUGGESTION")
+        # DONE
+        #print("HANDLING FIFTH SUGGESTION")
         return f"{usable_vars.pop()} es {match.group('var')}" if match else "FAIL IN HANDLING FIFTH SUGGESTION"
     else:
         #DONE

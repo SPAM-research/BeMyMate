@@ -1,0 +1,7 @@
+{"name": "Abigail", "id": 2, "graph_length": 4, "unknown_quantities": 3, "resolutions": [{"state": "FINISHED", "steps": 22, "helps": 2, "variables": 4, "equations": 4}]}, 
+{"name": "Las patatas", "id": 3, "graph_length": 2, "unknown_quantities": 4, "resolutions": [{"state": "FINISHED", "steps": 8, "helps": 1, "variables": 2, "equations": 1}]}, 
+{"name": "tutorial", "id": 1, "graph_length": 1, "unknown_quantities": 1, "resolutions": [{"state": "FINISHED", "steps": 5, "helps": 0, "variables": 1, "equations": 1}]}, 
+{"name": "PROBLEMA1", "id": 6, "graph_length": 3, "unknown_quantities": 6, "resolutions": [{"state": "FINISHED", "steps": 12, "helps": 0, "variables": 3, "equations": 3}]}, 
+naranjas (21032502) no vale
+{"name": "PROBLEMA1_1", "id": 18, "graph_length": 3, "unknown_quantities": 3, "resolutions": [{"state": "FINISHED", "steps": 23, "helps": 3, "variables": 3, "equations": 3}]}, 
+{"name": "20122217", "id": 28, "graph_length": 3, "unknown_quantities": 4, "resolutions": [{"state": "FINISHED", "steps": 14, "helps": 1, "variables": 3, "equations": 3}]}, 

@@ -13,8 +13,22 @@ import random
 already_defined_vars = []
 variable_regex="[\"\'`]?(?P<variable>[a-zA-Z_\(\)\|]+?)[\"\'`]"
 ending_regex = "(?:,|\(|\.|:|\n|$| and)"
-instructions = "Given a problem, variables and equations, define an equation that hasn't been defined. Do not solve the problem. Your output must only be an equation. Use '*' as the multiplication operator."
-instructions = "Given a problem, variables and equations, define an equation that hasn't been defined. Do not solve the problem. Your output must only be an equation. Use '*' as the multiplication operator. Follow the suggestion."
+debug = True
+
+# mistral
+instructions_mistral = "Given a problem, variables and equations, define an equation that hasn't been defined. Do not solve the problem. Your output must only be an equation. Use '*' as the multiplication operator. Follow the suggestion."
+
+# stable-beluga
+instructions_stable_beluga = "Given a problem, variables and equations, define all the remaining variables ('x is number of apples') and equations ('y = 4+z'). Do not solve the problem. Each line of your output must contain a variable definition or an equation. Use '*' as the multiplication operator. Follow the suggestion."
+
+# mixtral
+instructions_mixtral = """Given a problem, variables and equations, define all the remaining variables and equations. Each line of your output must contain a variable definition or an equation. A variable definition is '<letter> is <definition>'. An equations is '<letter> = <expression>'. Use '*' as the multiplication operator. Follow the suggestion. Do not explain the variable definitions or the equations. Your output should have the following format:
+x is number of oranges
+y is number of apples
+z is number of fruits
+z = x+y"""
+
+instructions = instructions_mistral
 
 
 def get_already_defined_variables(nb):
@@ -102,7 +116,9 @@ def clean_redundant(list_in):
             mono_def = mono_match.group("description")
             if multi_v == mono_def:
                 list_out.remove(multi)
-                list_out.remove(mono)
+                # Try added on Thurday, April 11, 2024
+                try: list_out.remove(mono)
+                except: ...
                 list_out.append(f"{mono_v} is {multi_def}")
     return list_out
     
@@ -119,6 +135,7 @@ def is_equation(l):
     return "=" in l
 
 def construct_chat_history(chat):
+    return [{"sender": "system" if e["sender"]=="system" else "you", "message": e["message"]} for e in chat]
     return "\n".join([e["message"] for e in chat[-6:] if e["sender"]=="system"])
     output = ""
     for e in chat:
@@ -131,11 +148,11 @@ def get_llm_response(llm, problem):
     #problem_layout = f"""
     #The problem: '{problem.text}'
     #Variables: '{", ".join(problem.notebook)}'
-    #Equations: '{", ".joiCANTIDAD DE DÓLARES QUE LE QUEDABAN A SUSANAn(problem.equations)}'
-    #Last message: '{problem.chat[-1]["message"]}'
+    #Equations: '{", ".join(problem.equations)}'
+    #Message history: '{construct_chat_history(problem.chat)}'
     #"""
+    #print(problem_layout)
 
-    ch = construct_chat_history(problem.chat)
     problem_layout = f"""
     The problem: '{problem.text}'
     Variables: '{", ".join(problem.notebook)}'
@@ -155,7 +172,8 @@ def get_llm_response(llm, problem):
         {"system_input": instructions, "human_input": problem_layout}
     ).content
 
-    preprocessed = unidecode(llm_output)
+    if debug: print(f"\n\n{llm_output}\n\n")
+    preprocessed = unidecode(llm_output).strip()
     preprocessed = preprocessed.replace(":", ":\n")
     preprocessed = preprocessed.replace("\\", "")
     output_lines = preprocessed.splitlines()
@@ -186,7 +204,7 @@ def get_llm_response(llm, problem):
     explanation = "\n".join(explanation).splitlines()
     explanation = list(filter(lambda e: ":" not in e, explanation))
     explanation = clean_redundant(explanation)
-    explanation = list(filter(lambda e: re.search(r"^[a-z] is", e), explanation))
+    explanation = list(filter(lambda e: re.search(r"^[a-z] .s", e), explanation))
     
     #equations = "\n".join(list(filter(lambda e: e != "", equations)))
     #explanation = "\n".join(list(filter(lambda e: e != "", explanation))).replace("_", " ").lower()
