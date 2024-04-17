@@ -18,7 +18,6 @@ default_sleep = 3
 max_consecutive_helps = 10
 max_steps = 100
 max_resolutions = 10
-max_resolutions = 1
 debug = False
 
 
@@ -70,7 +69,7 @@ class FakeUser:
         else:
             response = self.llm_handler.call()
 
-        response = self.ask_for_human_message(response)
+        #response = self.ask_for_human_message(response)
 
         response = response.strip().lower()
 
@@ -81,6 +80,9 @@ class FakeUser:
                 #print(response)
 
         if not re.search(r"^[0-9]+$|^si$", response): self.steps+=1
+        file = open("steps","w")
+        file.write(str(self.steps))
+        file.close()
         if re.search(r"ayuda", response):
             self.helps+=1
             self.consecutive_helps+=1
@@ -278,11 +280,13 @@ def login():
 def main():
     global driver
     chrome_options = webdriver.ChromeOptions()
-    #chrome_options.add_argument("--headless=new")
+    chrome_options.add_argument("--headless=new")
     driver = webdriver.Chrome(options=chrome_options)
     login()
     results = []
-    for p in problemas20:
+    start = 19
+    problemas = problemas20[problemas20.index(start):]
+    for p in problemas:
         fu = FakeUser(p)
         problem = {
             "name": fu.problem.name,
@@ -305,7 +309,7 @@ def main():
             time.sleep(5)
         results.append(problem)
         f = open("resolutions", "a")
-        print(json.dumps(problem))
+        #print(json.dumps(problem))
         f.write(json.dumps(problem))
         f.write(", ")
         f.close()
