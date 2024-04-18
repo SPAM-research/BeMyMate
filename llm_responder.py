@@ -13,7 +13,7 @@ import random
 already_defined_vars = []
 variable_regex="[\"\'`]?(?P<variable>[a-zA-Z_\(\)\|]+?)[\"\'`]"
 ending_regex = "(?:,|\(|\.|:|\n|$| and)"
-debug = False
+debug = True
 
 # mistral
 instructions_mistral = "Given a problem, variables and equations, define an equation that hasn't been defined. Do not solve the problem. Your output must only be an equation. Use '*' as the multiplication operator. Follow the suggestion."
@@ -165,6 +165,7 @@ def get_llm_response(llm, problem):
         ("system", "{system_input}"),
         ("human", "{human_input}"),
     ])
+    if debug: print(f"\n\n{problem_layout}\n\n")
 
     chain = prompt | llm
 
@@ -172,7 +173,7 @@ def get_llm_response(llm, problem):
         {"system_input": instructions, "human_input": problem_layout}
     ).content
 
-    if debug: print(f"\n\n{llm_output}\n\n")
+    if debug: print(f"\n\nRAW:\n{llm_output}\n\n")
     preprocessed = unidecode(llm_output).strip()
     preprocessed = preprocessed.replace(":", ":\n")
     preprocessed = preprocessed.replace("\\", "")

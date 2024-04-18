@@ -18,7 +18,7 @@ default_sleep = 3
 max_consecutive_helps = 10
 max_steps = 100
 max_resolutions = 10
-debug = False
+debug = True
 
 
 #problemas100 = [0, 2, 5, 19, 20, 21, 22, 27, 28, 29, 30, 31, 32, 33, 34, 36, 37, 38, 39, 40, 41, 42, 43, 53, 54, 57, 69, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 82, 83, 84, 85, 87, 88, 98, 100, 101, 102, 108, 109, 110, 111, 112, 113, 114, 119, 120, 121, 124, 126, 128, 129, 130, 131, 132, 133, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 161, 171, 174, 180, 181, 182, 183, 184, 185, 186]
@@ -58,18 +58,24 @@ class FakeUser:
         self.save_statistics()
 
     def get_message(self):
-        if debug: print("GET MESSAGE")
+        if debug: print("GET MESSAGE: ONE")
         if self.problem.chat[-1]["message"].startswith("Muy bien"):
             self.problem.last_suggestion = ""
 
+        if debug: print("GET MESSAGE: TWO")
         if last_message_is_clarification(self.problem):
+            if debug: print("GET MESSAGE: THREE")
             response = get_message_for_clarification(self.problem)
         elif last_message_is_suggestion(self.problem):
+            if debug: print("GET MESSAGE: FOUR")
             self.problem.last_suggestion += "\n".join([l for l in self.problem.chat[-1]["message"].splitlines() if l])+"\n\n"
             response = get_message_for_suggestion(self.problem)
             if response == "<CALL LLM>": response = self.llm_handler.call()
         else:
+            if debug: print("GET MESSAGE: FIVE")
             response = self.llm_handler.call()
+        if debug: print(f"\n\nPROC:\n{response}\n\n")
+        if debug: print("GET MESSAGE: SIX")
 
         #response = self.ask_for_human_message(response)
 
@@ -81,10 +87,8 @@ class FakeUser:
                 response = f"{var}{response[1:]}"
                 #print(response)
 
+        if debug: print("GET MESSAGE: SEVEN")
         if not re.search(r"^[0-9]+$|^si$", response): self.steps+=1
-        file = open("steps","w")
-        file.write(str(self.steps))
-        file.close()
         if re.search(r"ayuda", response):
             self.helps+=1
             self.consecutive_helps+=1
@@ -288,8 +292,10 @@ def main():
     login()
     results = []
     # Skipped: 
-    start = 19
-    problemas = problemas25[problemas25.index(start):]
+    #start = 19
+    #problemas = problemas25[problemas25.index(start):]
+    indice = 6 # Debe ser igual al número problemas resueltos (names) en resolutions
+    problemas = problemas25[indice:]
     for p in problemas:
         fu = FakeUser(p)
         problem = {
@@ -300,7 +306,11 @@ def main():
             "resolutions": []
         }
         for r in range(max_resolutions):
-            print(f"PROBLEM {p} | RESOLUTION {r}")
+            info = f"PROBLEM {p} | RESOLUTION {r}"
+            print(info)
+            file = open("steps","w")
+            file.write(info)
+            file.close()
             fu.solve_problem()
             resolution = {
                 "state": fu.finish_state,
