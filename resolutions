@@ -1,1 +1,1952 @@
-{"name": "Abigail", "id": 2, "graph_length": 4, "unknown_quantities": 3, "resolutions": [{"state": "MANY STEPS", "steps": 100, "helps": 4, "variables": 3, "equations": 2}, {"state": "FINISHED", "steps": 20, "helps": 7, "variables": 4, "equations": 4}, {"state": "HELP LOOP", "steps": 20, "helps": 13, "variables": 4, "equations": 2}, {"state": "HELP LOOP", "steps": 26, "helps": 15, "variables": 3, "equations": 1}, {"state": "HELP LOOP", "steps": 23, "helps": 14, "variables": 3, "equations": 1}, {"state": "HELP LOOP", "steps": 25, "helps": 14, "variables": 3, "equations": 1}, {"state": "HELP LOOP", "steps": 20, "helps": 13, "variables": 3, "equations": 1}, {"state": "HELP LOOP", "steps": 23, "helps": 14, "variables": 3, "equations": 1}, {"state": "HELP LOOP", "steps": 25, "helps": 14, "variables": 3, "equations": 1}, {"state": "HELP LOOP", "steps": 23, "helps": 14, "variables": 3, "equations": 1}]}, {"name": "tutorial", "id": 1, "graph_length": 1, "unknown_quantities": 1, "resolutions": [{"state": "FINISHED", "steps": 2, "helps": 0, "variables": 1, "equations": 1}, {"state": "FINISHED", "steps": 2, "helps": 0, "variables": 1, "equations": 1}, {"state": "FINISHED", "steps": 2, "helps": 0, "variables": 1, "equations": 1}, {"state": "FINISHED", "steps": 2, "helps": 0, "variables": 1, "equations": 1}, {"state": "FINISHED", "steps": 2, "helps": 0, "variables": 1, "equations": 1}, {"state": "FINISHED", "steps": 2, "helps": 0, "variables": 1, "equations": 1}, {"state": "FINISHED", "steps": 2, "helps": 0, "variables": 1, "equations": 1}, {"state": "FINISHED", "steps": 2, "helps": 0, "variables": 1, "equations": 1}, {"state": "FINISHED", "steps": 2, "helps": 0, "variables": 1, "equations": 1}, {"state": "FINISHED", "steps": 2, "helps": 0, "variables": 1, "equations": 1}]}, {"name": "PROBLEMA1_1", "id": 18, "graph_length": 3, "unknown_quantities": 3, "resolutions": [{"state": "HELP LOOP", "steps": 17, "helps": 11, "variables": 2, "equations": 1}, {"state": "HELP LOOP", "steps": 20, "helps": 11, "variables": 2, "equations": 1}, {"state": "HELP LOOP", "steps": 16, "helps": 11, "variables": 2, "equations": 1}, {"state": "HELP LOOP", "steps": 18, "helps": 11, "variables": 2, "equations": 1}, {"state": "HELP LOOP", "steps": 16, "helps": 11, "variables": 2, "equations": 1}, {"state": "MANY STEPS", "steps": 100, "helps": 3, "variables": 3, "equations": 0}, {"state": "FINISHED", "steps": 19, "helps": 5, "variables": 3, "equations": 3}, {"state": "HELP LOOP", "steps": 16, "helps": 11, "variables": 2, "equations": 1}, {"state": "HELP LOOP", "steps": 17, "helps": 11, "variables": 2, "equations": 1}, {"state": "HELP LOOP", "steps": 23, "helps": 13, "variables": 3, "equations": 0}]}, {"name": "conejos_especial", "id": 47, "graph_length": 4, "unknown_quantities": 4, "resolutions": [{"state": "FINISHED", "steps": 9, "helps": 2, "variables": 2, "equations": 4}, {"state": "FINISHED", "steps": 32, "helps": 5, "variables": 3, "equations": 4}, {"state": "FINISHED", "steps": 18, "helps": 6, "variables": 3, "equations": 4}, {"state": "FINISHED", "steps": 15, "helps": 5, "variables": 3, "equations": 4}, {"state": "FINISHED", "steps": 10, "helps": 3, "variables": 2, "equations": 4}, {"state": "FINISHED", "steps": 8, "helps": 2, "variables": 2, "equations": 4}, {"state": "FINISHED", "steps": 22, "helps": 2, "variables": 2, "equations": 4}, {"state": "FINISHED", "steps": 9, "helps": 2, "variables": 2, "equations": 4}, {"state": "FINISHED", "steps": 8, "helps": 2, "variables": 2, "equations": 4}, {"state": "FINISHED", "steps": 17, "helps": 5, "variables": 3, "equations": 4}]}, {"name": "abrigos_especial", "id": 48, "graph_length": 3, "unknown_quantities": 3, "resolutions": [{"state": "FINISHED", "steps": 14, "helps": 4, "variables": 3, "equations": 3}, {"state": "HELP LOOP", "steps": 18, "helps": 11, "variables": 2, "equations": 0}, {"state": "FINISHED", "steps": 14, "helps": 5, "variables": 2, "equations": 3}, {"state": "FINISHED", "steps": 6, "helps": 1, "variables": 2, "equations": 3}, {"state": "FINISHED", "steps": 14, "helps": 5, "variables": 2, "equations": 3}, {"state": "FINISHED", "steps": 9, "helps": 2, "variables": 2, "equations": 3}, {"state": "FINISHED", "steps": 10, "helps": 3, "variables": 2, "equations": 3}, {"state": "FINISHED", "steps": 14, "helps": 5, "variables": 2, "equations": 3}, {"state": "FINISHED", "steps": 35, "helps": 6, "variables": 3, "equations": 3}, {"state": "FINISHED", "steps": 7, "helps": 1, "variables": 2, "equations": 3}]}, {"name": "conejos_x_conejos", "id": 49, "graph_length": 4, "unknown_quantities": 3, "resolutions": [{"state": "HELP LOOP", "steps": 17, "helps": 12, "variables": 3, "equations": 0}, {"state": "FINISHED", "steps": 10, "helps": 2, "variables": 3, "equations": 4}, {"state": "HELP LOOP", "steps": 20, "helps": 13, "variables": 3, "equations": 0}, {"state": "HELP LOOP", "steps": 17, "helps": 12, "variables": 3, "equations": 0}, {"state": "HELP LOOP", "steps": 18, "helps": 12, "variables": 3, "equations": 0}, {"state": "HELP LOOP", "steps": 18, "helps": 12, "variables": 3, "equations": 0}, {"state": "HELP LOOP", "steps": 17, "helps": 12, "variables": 3, "equations": 0}, {"state": "HELP LOOP", "steps": 19, "helps": 12, "variables": 3, "equations": 2}, {"state": "HELP LOOP", "steps": 19, "helps": 12, "variables": 3, "equations": 0}, {"state": "HELP LOOP", "steps": 23, "helps": 13, "variables": 3, "equations": 2}]}, 
+[
+    {
+        "name": "Abigail",
+        "id": 2,
+        "graph_length": 4,
+        "unknown_quantities": 3,
+        "resolutions": [
+            {
+                "state": "MANY STEPS",
+                "steps": 100,
+                "helps": 4,
+                "variables": 3,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 20,
+                "helps": 7,
+                "variables": 4,
+                "equations": 4
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 20,
+                "helps": 13,
+                "variables": 4,
+                "equations": 2
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 26,
+                "helps": 15,
+                "variables": 3,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 23,
+                "helps": 14,
+                "variables": 3,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 25,
+                "helps": 14,
+                "variables": 3,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 20,
+                "helps": 13,
+                "variables": 3,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 23,
+                "helps": 14,
+                "variables": 3,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 25,
+                "helps": 14,
+                "variables": 3,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 39,
+                "helps": 14,
+                "variables": 3,
+                "equations": 1
+            }
+        ]
+    },
+    {
+        "name": "tutorial",
+        "id": 1,
+        "graph_length": 1,
+        "unknown_quantities": 1,
+        "resolutions": [
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 1
+            }
+        ]
+    },
+    {
+        "name": "PROBLEMA1_1",
+        "id": 18,
+        "graph_length": 3,
+        "unknown_quantities": 3,
+        "resolutions": [
+            {
+                "state": "HELP LOOP",
+                "steps": 18,
+                "helps": 11,
+                "variables": 2,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 16,
+                "helps": 11,
+                "variables": 2,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 16,
+                "helps": 11,
+                "variables": 2,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 20,
+                "helps": 12,
+                "variables": 3,
+                "equations": 0
+            },
+            {
+                "state": "FINISHED",
+                "steps": 23,
+                "helps": 7,
+                "variables": 3,
+                "equations": 3
+            },
+            {
+                "state": "FINISHED",
+                "steps": 16,
+                "helps": 4,
+                "variables": 3,
+                "equations": 3
+            },
+            {
+                "state": "FINISHED",
+                "steps": 20,
+                "helps": 7,
+                "variables": 3,
+                "equations": 3
+            },
+            {
+                "state": "FINISHED",
+                "steps": 14,
+                "helps": 4,
+                "variables": 3,
+                "equations": 3
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 23,
+                "helps": 13,
+                "variables": 3,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 21,
+                "helps": 5,
+                "variables": 3,
+                "equations": 3
+            }
+        ]
+    },
+    {
+        "name": "conejos_especial",
+        "id": 47,
+        "graph_length": 4,
+        "unknown_quantities": 4,
+        "resolutions": [
+            {
+                "state": "HELP LOOP",
+                "steps": 26,
+                "helps": 15,
+                "variables": 4,
+                "equations": 2
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 42,
+                "helps": 15,
+                "variables": 4,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 43,
+                "helps": 2,
+                "variables": 2,
+                "equations": 4
+            },
+            {
+                "state": "FINISHED",
+                "steps": 10,
+                "helps": 2,
+                "variables": 2,
+                "equations": 4
+            },
+            {
+                "state": "FINISHED",
+                "steps": 39,
+                "helps": 5,
+                "variables": 3,
+                "equations": 4
+            },
+            {
+                "state": "FINISHED",
+                "steps": 9,
+                "helps": 2,
+                "variables": 2,
+                "equations": 4
+            },
+            {
+                "state": "FINISHED",
+                "steps": 29,
+                "helps": 2,
+                "variables": 2,
+                "equations": 4
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 36,
+                "helps": 15,
+                "variables": 4,
+                "equations": 2
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 56,
+                "helps": 15,
+                "variables": 4,
+                "equations": 2
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 29,
+                "helps": 14,
+                "variables": 4,
+                "equations": 2
+            }
+        ]
+    },
+    {
+        "name": "abrigos_especial",
+        "id": 48,
+        "graph_length": 3,
+        "unknown_quantities": 3,
+        "resolutions": [
+            {
+                "state": "FINISHED",
+                "steps": 14,
+                "helps": 5,
+                "variables": 2,
+                "equations": 3
+            },
+            {
+                "state": "FINISHED",
+                "steps": 9,
+                "helps": 1,
+                "variables": 2,
+                "equations": 3
+            },
+            {
+                "state": "FINISHED",
+                "steps": 12,
+                "helps": 4,
+                "variables": 2,
+                "equations": 3
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 18,
+                "helps": 12,
+                "variables": 2,
+                "equations": 0
+            },
+            {
+                "state": "FINISHED",
+                "steps": 6,
+                "helps": 1,
+                "variables": 2,
+                "equations": 3
+            },
+            {
+                "state": "FINISHED",
+                "steps": 14,
+                "helps": 5,
+                "variables": 2,
+                "equations": 3
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 19,
+                "helps": 12,
+                "variables": 2,
+                "equations": 0
+            },
+            {
+                "state": "FINISHED",
+                "steps": 14,
+                "helps": 5,
+                "variables": 2,
+                "equations": 3
+            },
+            {
+                "state": "FINISHED",
+                "steps": 9,
+                "helps": 1,
+                "variables": 2,
+                "equations": 3
+            },
+            {
+                "state": "FINISHED",
+                "steps": 14,
+                "helps": 5,
+                "variables": 2,
+                "equations": 3
+            }
+        ]
+    },
+    {
+        "name": "conejos_x_conejos",
+        "id": 49,
+        "graph_length": 4,
+        "unknown_quantities": 3,
+        "resolutions": [
+            {
+                "state": "HELP LOOP",
+                "steps": 24,
+                "helps": 13,
+                "variables": 3,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 6,
+                "helps": 1,
+                "variables": 2,
+                "equations": 4
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 17,
+                "helps": 12,
+                "variables": 3,
+                "equations": 0
+            },
+            {
+                "state": "FINISHED",
+                "steps": 10,
+                "helps": 2,
+                "variables": 3,
+                "equations": 4
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 24,
+                "helps": 13,
+                "variables": 4,
+                "equations": 2
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 17,
+                "helps": 12,
+                "variables": 3,
+                "equations": 0
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 18,
+                "helps": 12,
+                "variables": 3,
+                "equations": 0
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 18,
+                "helps": 12,
+                "variables": 3,
+                "equations": 0
+            },
+            {
+                "state": "FINISHED",
+                "steps": 10,
+                "helps": 2,
+                "variables": 3,
+                "equations": 4
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 17,
+                "helps": 12,
+                "variables": 3,
+                "equations": 0
+            }
+        ]
+    },
+    {
+        "name": "conejos_especial_x_patas_gallinas",
+        "id": 50,
+        "graph_length": 4,
+        "unknown_quantities": 3,
+        "resolutions": [
+            {
+                "state": "HELP LOOP",
+                "steps": 27,
+                "helps": 16,
+                "variables": 4,
+                "equations": 2
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 24,
+                "helps": 14,
+                "variables": 4,
+                "equations": 2
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 23,
+                "helps": 14,
+                "variables": 4,
+                "equations": 2
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 21,
+                "helps": 13,
+                "variables": 4,
+                "equations": 2
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 23,
+                "helps": 14,
+                "variables": 4,
+                "equations": 2
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 24,
+                "helps": 15,
+                "variables": 4,
+                "equations": 2
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 23,
+                "helps": 14,
+                "variables": 4,
+                "equations": 2
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 21,
+                "helps": 13,
+                "variables": 4,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 14,
+                "helps": 5,
+                "variables": 3,
+                "equations": 4
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 24,
+                "helps": 14,
+                "variables": 4,
+                "equations": 2
+            }
+        ]
+    },
+    {
+        "name": "21_03_05_14_F01",
+        "id": 63,
+        "graph_length": 2,
+        "unknown_quantities": 1,
+        "resolutions": [
+            {
+                "state": "FINISHED",
+                "steps": 9,
+                "helps": 3,
+                "variables": 2,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 9,
+                "helps": 3,
+                "variables": 2,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 9,
+                "helps": 3,
+                "variables": 2,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 9,
+                "helps": 3,
+                "variables": 2,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 9,
+                "helps": 3,
+                "variables": 2,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 9,
+                "helps": 3,
+                "variables": 2,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 9,
+                "helps": 3,
+                "variables": 2,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 9,
+                "helps": 3,
+                "variables": 2,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 9,
+                "helps": 3,
+                "variables": 2,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 9,
+                "helps": 3,
+                "variables": 2,
+                "equations": 2
+            }
+        ]
+    },
+    {
+        "name": "21_03_05_08_F01",
+        "id": 64,
+        "graph_length": 2,
+        "unknown_quantities": 1,
+        "resolutions": [
+            {
+                "state": "MANY STEPS",
+                "steps": 100,
+                "helps": 3,
+                "variables": 2,
+                "equations": 1
+            },
+            {
+                "state": "MANY STEPS",
+                "steps": 100,
+                "helps": 2,
+                "variables": 2,
+                "equations": 1
+            },
+            {
+                "state": "MANY STEPS",
+                "steps": 100,
+                "helps": 1,
+                "variables": 2,
+                "equations": 1
+            },
+            {
+                "state": "MANY STEPS",
+                "steps": 100,
+                "helps": 1,
+                "variables": 2,
+                "equations": 1
+            },
+            {
+                "state": "MANY STEPS",
+                "steps": 100,
+                "helps": 1,
+                "variables": 2,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 13,
+                "helps": 5,
+                "variables": 2,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 4,
+                "helps": 1,
+                "variables": 2,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 83,
+                "helps": 3,
+                "variables": 2,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 4,
+                "helps": 1,
+                "variables": 2,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 94,
+                "helps": 3,
+                "variables": 2,
+                "equations": 2
+            }
+        ]
+    },
+    {
+        "name": "21_03_05_06_F01",
+        "id": 65,
+        "graph_length": 3,
+        "unknown_quantities": 2,
+        "resolutions": [
+            {
+                "state": "FINISHED",
+                "steps": 75,
+                "helps": 4,
+                "variables": 3,
+                "equations": 3
+            },
+            {
+                "state": "MANY STEPS",
+                "steps": 100,
+                "helps": 4,
+                "variables": 2,
+                "equations": 0
+            },
+            {
+                "state": "FINISHED",
+                "steps": 8,
+                "helps": 2,
+                "variables": 3,
+                "equations": 3
+            },
+            {
+                "state": "MANY STEPS",
+                "steps": 100,
+                "helps": 8,
+                "variables": 2,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 28,
+                "helps": 6,
+                "variables": 3,
+                "equations": 3
+            },
+            {
+                "state": "MANY STEPS",
+                "steps": 100,
+                "helps": 11,
+                "variables": 2,
+                "equations": 0
+            },
+            {
+                "state": "FINISHED",
+                "steps": 7,
+                "helps": 2,
+                "variables": 2,
+                "equations": 3
+            },
+            {
+                "state": "FINISHED",
+                "steps": 10,
+                "helps": 3,
+                "variables": 3,
+                "equations": 3
+            },
+            {
+                "state": "FINISHED",
+                "steps": 16,
+                "helps": 5,
+                "variables": 3,
+                "equations": 3
+            },
+            {
+                "state": "FINISHED",
+                "steps": 10,
+                "helps": 3,
+                "variables": 3,
+                "equations": 3
+            }
+        ]
+    },
+    {
+        "name": "21_03_05_04_F01",
+        "id": 66,
+        "graph_length": 5,
+        "unknown_quantities": 4,
+        "resolutions": [
+            {
+                "state": "HELP LOOP",
+                "steps": 28,
+                "helps": 15,
+                "variables": 5,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 25,
+                "helps": 14,
+                "variables": 5,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 34,
+                "helps": 9,
+                "variables": 5,
+                "equations": 5
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 83,
+                "helps": 15,
+                "variables": 4,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 29,
+                "helps": 15,
+                "variables": 5,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 29,
+                "helps": 15,
+                "variables": 5,
+                "equations": 2
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 26,
+                "helps": 15,
+                "variables": 5,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 93,
+                "helps": 43,
+                "variables": 5,
+                "equations": 0
+            },
+            {
+                "state": "MANY STEPS",
+                "steps": 100,
+                "helps": 34,
+                "variables": 5,
+                "equations": 3
+            },
+            {
+                "state": "MANY STEPS",
+                "steps": 100,
+                "helps": 7,
+                "variables": 5,
+                "equations": 3
+            }
+        ]
+    },
+    {
+        "name": "21_05_26_01_F01",
+        "id": 67,
+        "graph_length": 3,
+        "unknown_quantities": 2,
+        "resolutions": [
+            {
+                "state": "MANY STEPS",
+                "steps": 100,
+                "helps": 1,
+                "variables": 2,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 17,
+                "helps": 6,
+                "variables": 3,
+                "equations": 3
+            },
+            {
+                "state": "FINISHED",
+                "steps": 18,
+                "helps": 5,
+                "variables": 3,
+                "equations": 3
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 51,
+                "helps": 27,
+                "variables": 1,
+                "equations": 0
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 30,
+                "helps": 15,
+                "variables": 3,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 24,
+                "helps": 5,
+                "variables": 3,
+                "equations": 3
+            },
+            {
+                "state": "FINISHED",
+                "steps": 15,
+                "helps": 4,
+                "variables": 3,
+                "equations": 3
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 22,
+                "helps": 14,
+                "variables": 3,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 44,
+                "helps": 5,
+                "variables": 3,
+                "equations": 3
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 23,
+                "helps": 14,
+                "variables": 3,
+                "equations": 2
+            }
+        ]
+    },
+    {
+        "name": "21_03_05_09_F01",
+        "id": 68,
+        "graph_length": 3,
+        "unknown_quantities": 2,
+        "resolutions": [
+            {
+                "state": "HELP LOOP",
+                "steps": 15,
+                "helps": 11,
+                "variables": 2,
+                "equations": 0
+            },
+            {
+                "state": "FINISHED",
+                "steps": 7,
+                "helps": 2,
+                "variables": 2,
+                "equations": 3
+            },
+            {
+                "state": "FINISHED",
+                "steps": 9,
+                "helps": 2,
+                "variables": 2,
+                "equations": 3
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 15,
+                "helps": 11,
+                "variables": 2,
+                "equations": 0
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 17,
+                "helps": 11,
+                "variables": 2,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 7,
+                "helps": 2,
+                "variables": 2,
+                "equations": 3
+            },
+            {
+                "state": "FINISHED",
+                "steps": 7,
+                "helps": 1,
+                "variables": 3,
+                "equations": 3
+            },
+            {
+                "state": "FINISHED",
+                "steps": 13,
+                "helps": 4,
+                "variables": 3,
+                "equations": 3
+            },
+            {
+                "state": "FINISHED",
+                "steps": 9,
+                "helps": 2,
+                "variables": 3,
+                "equations": 3
+            },
+            {
+                "state": "FINISHED",
+                "steps": 12,
+                "helps": 3,
+                "variables": 3,
+                "equations": 3
+            }
+        ]
+    },
+    {
+        "name": "21_03_05_03",
+        "id": 70,
+        "graph_length": 4,
+        "unknown_quantities": 4,
+        "resolutions": [
+            {
+                "state": "HELP LOOP",
+                "steps": 26,
+                "helps": 14,
+                "variables": 4,
+                "equations": 2
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 26,
+                "helps": 14,
+                "variables": 3,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 41,
+                "helps": 14,
+                "variables": 3,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 25,
+                "helps": 13,
+                "variables": 4,
+                "equations": 2
+            },
+            {
+                "state": "MANY STEPS",
+                "steps": 100,
+                "helps": 24,
+                "variables": 3,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 20,
+                "helps": 6,
+                "variables": 3,
+                "equations": 4
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 59,
+                "helps": 16,
+                "variables": 3,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 61,
+                "helps": 8,
+                "variables": 4,
+                "equations": 4
+            },
+            {
+                "state": "MANY STEPS",
+                "steps": 100,
+                "helps": 5,
+                "variables": 3,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 79,
+                "helps": 7,
+                "variables": 3,
+                "equations": 4
+            }
+        ]
+    },
+    {
+        "name": "21_03_05_08",
+        "id": 75,
+        "graph_length": 2,
+        "unknown_quantities": 2,
+        "resolutions": [
+            {
+                "state": "HELP LOOP",
+                "steps": 28,
+                "helps": 15,
+                "variables": 4,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 21,
+                "helps": 13,
+                "variables": 3,
+                "equations": 2
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 34,
+                "helps": 15,
+                "variables": 4,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 35,
+                "helps": 17,
+                "variables": 5,
+                "equations": 2
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 34,
+                "helps": 16,
+                "variables": 4,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 8,
+                "helps": 2,
+                "variables": 2,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 11,
+                "helps": 4,
+                "variables": 2,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 11,
+                "helps": 3,
+                "variables": 2,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 11,
+                "helps": 4,
+                "variables": 2,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 10,
+                "helps": 3,
+                "variables": 2,
+                "equations": 2
+            }
+        ]
+    },
+    {
+        "name": "21_03_05_04",
+        "id": 76,
+        "graph_length": 5,
+        "unknown_quantities": 5,
+        "resolutions": [
+            {
+                "state": "FINISHED",
+                "steps": 62,
+                "helps": 8,
+                "variables": 4,
+                "equations": 5
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 17,
+                "helps": 11,
+                "variables": 3,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 25,
+                "helps": 14,
+                "variables": 5,
+                "equations": 0
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 32,
+                "helps": 15,
+                "variables": 4,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 29,
+                "helps": 15,
+                "variables": 4,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 22,
+                "helps": 13,
+                "variables": 4,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 31,
+                "helps": 16,
+                "variables": 4,
+                "equations": 2
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 29,
+                "helps": 15,
+                "variables": 4,
+                "equations": 2
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 38,
+                "helps": 16,
+                "variables": 4,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 34,
+                "helps": 10,
+                "variables": 5,
+                "equations": 5
+            }
+        ]
+    },
+    {
+        "name": "21012008",
+        "id": 225,
+        "graph_length": 1,
+        "unknown_quantities": 1,
+        "resolutions": [
+            {
+                "state": "HELP LOOP",
+                "steps": 24,
+                "helps": 14,
+                "variables": 5,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 26,
+                "helps": 15,
+                "variables": 5,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 27,
+                "helps": 9,
+                "variables": 5,
+                "equations": 5
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 16,
+                "helps": 11,
+                "variables": 3,
+                "equations": 1
+            },
+            {
+                "state": "MANY STEPS",
+                "steps": 100,
+                "helps": 9,
+                "variables": 5,
+                "equations": 4
+            },
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 1
+            }
+        ]
+    },
+    {
+        "name": "21_03_05_04_F01",
+        "id": 66,
+        "graph_length": 5,
+        "unknown_quantities": 4,
+        "resolutions": [
+            {
+                "state": "FINISHED",
+                "steps": 27,
+                "helps": 7,
+                "variables": 5,
+                "equations": 5
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 22,
+                "helps": 14,
+                "variables": 4,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 28,
+                "helps": 15,
+                "variables": 5,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 23,
+                "helps": 13,
+                "variables": 5,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 28,
+                "helps": 15,
+                "variables": 5,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 33,
+                "helps": 9,
+                "variables": 5,
+                "equations": 5
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 50,
+                "helps": 21,
+                "variables": 5,
+                "equations": 4
+            },
+            {
+                "state": "FINISHED",
+                "steps": 28,
+                "helps": 8,
+                "variables": 5,
+                "equations": 5
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 17,
+                "helps": 11,
+                "variables": 3,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 27,
+                "helps": 15,
+                "variables": 5,
+                "equations": 1
+            }
+        ]
+    },
+    {
+        "name": "21012008",
+        "id": 225,
+        "graph_length": 1,
+        "unknown_quantities": 1,
+        "resolutions": [
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 1
+            }
+        ]
+    },
+    {
+        "name": "21_03_05_04",
+        "id": 76,
+        "graph_length": 5,
+        "unknown_quantities": 5,
+        "resolutions": [
+            {
+                "state": "HELP LOOP",
+                "steps": 30,
+                "helps": 16,
+                "variables": 4,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 35,
+                "helps": 9,
+                "variables": 5,
+                "equations": 5
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 23,
+                "helps": 12,
+                "variables": 3,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 28,
+                "helps": 15,
+                "variables": 4,
+                "equations": 2
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 27,
+                "helps": 15,
+                "variables": 4,
+                "equations": 2
+            },
+            {
+                "state": "MANY STEPS",
+                "steps": 100,
+                "helps": 1,
+                "variables": 2,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 29,
+                "helps": 15,
+                "variables": 4,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 28,
+                "helps": 13,
+                "variables": 4,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 27,
+                "helps": 15,
+                "variables": 4,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 31,
+                "helps": 17,
+                "variables": 4,
+                "equations": 1
+            }
+        ]
+    },
+    {
+        "name": "Bob's chocolates",
+        "id": 328,
+        "graph_length": 1,
+        "unknown_quantities": 1,
+        "resolutions": [
+            {
+                "state": "FINISHED",
+                "steps": 7,
+                "helps": 2,
+                "variables": 1,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 1,
+                "helps": 0,
+                "variables": 0,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 1,
+                "helps": 0,
+                "variables": 0,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 1,
+                "helps": 0,
+                "variables": 0,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 1,
+                "helps": 0,
+                "variables": 0,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 1,
+                "helps": 0,
+                "variables": 0,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 1,
+                "helps": 0,
+                "variables": 0,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 1,
+                "helps": 0,
+                "variables": 0,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 1,
+                "helps": 0,
+                "variables": 0,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 1,
+                "helps": 0,
+                "variables": 0,
+                "equations": 1
+            }
+        ]
+    },
+    {
+        "name": "Peter and Anne",
+        "id": 325,
+        "graph_length": 1,
+        "unknown_quantities": 1,
+        "resolutions": [
+            {
+                "state": "FINISHED",
+                "steps": 3,
+                "helps": 1,
+                "variables": 1,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 3,
+                "helps": 1,
+                "variables": 1,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 3,
+                "helps": 1,
+                "variables": 1,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 3,
+                "helps": 1,
+                "variables": 1,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 3,
+                "helps": 1,
+                "variables": 1,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 3,
+                "helps": 1,
+                "variables": 1,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 3,
+                "helps": 1,
+                "variables": 1,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 3,
+                "helps": 1,
+                "variables": 1,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 3,
+                "helps": 1,
+                "variables": 1,
+                "equations": 1
+            },
+            {
+                "state": "FINISHED",
+                "steps": 3,
+                "helps": 1,
+                "variables": 1,
+                "equations": 1
+            }
+        ]
+    },
+    {
+        "name": "21012040_modA",
+        "id": 634,
+        "graph_length": 2,
+        "unknown_quantities": 2,
+        "resolutions": [
+            {
+                "state": "HELP LOOP",
+                "steps": 26,
+                "helps": 14,
+                "variables": 2,
+                "equations": 1
+            },
+            {
+                "state": "MANY STEPS",
+                "steps": 100,
+                "helps": 2,
+                "variables": 2,
+                "equations": 0
+            },
+            {
+                "state": "FINISHED",
+                "steps": 9,
+                "helps": 2,
+                "variables": 2,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 42,
+                "helps": 3,
+                "variables": 2,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 12,
+                "helps": 3,
+                "variables": 2,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 11,
+                "helps": 3,
+                "variables": 2,
+                "equations": 2
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 36,
+                "helps": 15,
+                "variables": 2,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 27,
+                "helps": 14,
+                "variables": 2,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 30,
+                "helps": 14,
+                "variables": 2,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 32,
+                "helps": 14,
+                "variables": 2,
+                "equations": 1
+            }
+        ]
+    },
+    {
+        "name": "21_03_05_04_F01",
+        "id": 66,
+        "graph_length": 5,
+        "unknown_quantities": 4,
+        "resolutions": [
+            {
+                "state": "MANY STEPS",
+                "steps": 100,
+                "helps": 10,
+                "variables": 5,
+                "equations": 4
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 34,
+                "helps": 15,
+                "variables": 4,
+                "equations": 2
+            },
+            {
+                "state": "MANY STEPS",
+                "steps": 100,
+                "helps": 8,
+                "variables": 5,
+                "equations": 4
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 23,
+                "helps": 13,
+                "variables": 4,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 31,
+                "helps": 15,
+                "variables": 5,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 31,
+                "helps": 15,
+                "variables": 5,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 26,
+                "helps": 15,
+                "variables": 5,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 26,
+                "helps": 15,
+                "variables": 5,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 25,
+                "helps": 14,
+                "variables": 5,
+                "equations": 1
+            },
+            {
+                "state": "HELP LOOP",
+                "steps": 23,
+                "helps": 13,
+                "variables": 5,
+                "equations": 1
+            }
+        ]
+    },
+    {
+        "name": "Segundo",
+        "id": 458,
+        "graph_length": 2,
+        "unknown_quantities": 2,
+        "resolutions": [
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 2
+            },
+            {
+                "state": "FINISHED",
+                "steps": 2,
+                "helps": 0,
+                "variables": 1,
+                "equations": 2
+            }
+        ]
+    }
+]

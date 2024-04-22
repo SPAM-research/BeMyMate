@@ -13,7 +13,7 @@ import random
 already_defined_vars = []
 variable_regex="[\"\'`]?(?P<variable>[a-zA-Z_\(\)\|]+?)[\"\'`]"
 ending_regex = "(?:,|\(|\.|:|\n|$| and)"
-debug = True
+debug = False
 
 # mistral
 instructions_mistral = "Given a problem, variables and equations, define an equation that hasn't been defined. Do not solve the problem. Your output must only be an equation. Use '*' as the multiplication operator. Follow the suggestion."

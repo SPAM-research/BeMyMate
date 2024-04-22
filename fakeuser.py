@@ -2,6 +2,8 @@ import time
 import json
 import re
 import requests
+import concurrent.futures
+
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -18,12 +20,13 @@ default_sleep = 3
 max_consecutive_helps = 10
 max_steps = 100
 max_resolutions = 10
-debug = True
+debug = False
 
 
 #problemas100 = [0, 2, 5, 19, 20, 21, 22, 27, 28, 29, 30, 31, 32, 33, 34, 36, 37, 38, 39, 40, 41, 42, 43, 53, 54, 57, 69, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 82, 83, 84, 85, 87, 88, 98, 100, 101, 102, 108, 109, 110, 111, 112, 113, 114, 119, 120, 121, 124, 126, 128, 129, 130, 131, 132, 133, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 161, 171, 174, 180, 181, 182, 183, 184, 185, 186]
 
-problemas25 = [0,2,5,19,20,21,22,27,28,29,30,31,32,34,39,40,57,71,78,79,80,87,120,209,210]
+# Last five were problematic
+problemas25 = [0,2,5,19,20,21,22,27,28,29,30,31,32,34,39,40,98,30,98,120,40,108,129,174,181]
 
 
 
@@ -51,8 +54,15 @@ class FakeUser:
         while not self.finished:
             self.get_problem_state()
             if not self.finished:
-                self.send_message(self.get_message())
+                with concurrent.futures.ThreadPoolExecutor() as executor:
+                    future = executor.submit(self.get_message)
+                    try:
+                        result = future.result(timeout=30)
+                        self.send_message(result)
+                    except concurrent.futures.TimeoutError: quit()
                 time.sleep(default_sleep)
+
+
             #print("\n")
 
         self.save_statistics()
@@ -157,7 +167,7 @@ class FakeUser:
                         time.sleep(1)
                     else: break
                 collection.click()
-                time.sleep(5)
+                time.sleep(10)
             else: break
     
     def set_problem(self, problem_index):
@@ -193,13 +203,13 @@ class FakeUser:
         if debug: print("SEND MESSAGE")
         self.go_to_problem()
         chat_input = driver.find_element(By.CSS_SELECTOR, ".message_input_collection.message_input.form-control")
-        time.sleep(1)
+        time.sleep(2)
         chat_input.clear()
-        time.sleep(1)
+        time.sleep(2)
         chat_input.send_keys(message)
-        time.sleep(1)
+        time.sleep(2)
         chat_input.send_keys(Keys.ENTER)
-        time.sleep(1)
+        time.sleep(2)
     
     def check_if_finished(self):
         if debug: print("CHECK FINISHED")
@@ -284,18 +294,52 @@ def login():
     
     password_input.send_keys(Keys.ENTER)
 
+
+def read_resolutions():
+    file = open("resolutions", "r")
+    resolutions = json.loads(file.read())
+    file.close()
+    return resolutions
+
+def write_resolutions(resolutions):
+    file = open("resolutions", "w")
+    file.write(json.dumps(resolutions, indent=4))
+    file.close()
+
+# Read resolutions json and convert to dict
+# Find which problem and resolution we have to run
+# Run resolution
+# Save results to json
+
 def main():
     global driver
     chrome_options = webdriver.ChromeOptions()
     #chrome_options.add_argument("--headless=new")
     driver = webdriver.Chrome(options=chrome_options)
     login()
-    results = []
+
+    try:
+        resolutions = read_resolutions()
+        start_problem = len(resolutions)-1
+        start_resolution = len(resolutions[-1]["resolutions"])
+    except:
+        resolutions = []
+        start_problem = 0
+        start_resolution = 0
+
+    if start_resolution==max_resolutions:
+        start_problem+=1
+        start_resolution=0
+
+    #for i in range(25):
+    #    fu = FakeUser(problemas25[i])
+    #    print(f"{i+1}: {fu.problem.name}")
+    #quit()
     # Skipped: 
     #start = 19
     #problemas = problemas25[problemas25.index(start):]
     indice = 6 # Debe ser igual al número problemas resueltos (names) en resolutions
-    problemas = problemas25[indice:]
+    problemas = problemas25[start_problem:]
     for p in problemas:
         fu = FakeUser(p)
         problem = {
@@ -303,14 +347,11 @@ def main():
             "id": fu.problem.id,
             "graph_length": fu.gs,
             "unknown_quantities": fu.uq,
-            "resolutions": []
+            "resolutions": [] if start_resolution==0 else read_resolutions()[-1]["resolutions"]
         }
-        for r in range(max_resolutions):
-            info = f"PROBLEM {p} | RESOLUTION {r}"
-            print(info)
-            file = open("steps","w")
-            file.write(info)
-            file.close()
+        for r in range(start_resolution,max_resolutions):
+            resolutions = read_resolutions()
+            print(f"PROBLEM {p} (index={problemas25.index(p)}) | RESOLUTION {r}")
             fu.solve_problem()
             resolution = {
                 "state": fu.finish_state,
@@ -319,16 +360,14 @@ def main():
                 "variables": fu.nb,
                 "equations": fu.eq
             }
+            #print(resolution)
             problem["resolutions"].append(resolution)
+            resolutions[-1] = problem
+            write_resolutions(resolutions)
             time.sleep(5)
-        results.append(problem)
-        f = open("resolutions", "a")
-        #print(json.dumps(problem))
-        f.write(json.dumps(problem))
-        f.write(", ")
-        f.close()
-    #print(results)
-    #open("resolutions", "w").write(json.dumps(results))
+        resolutions.append(problem)
+        write_resolutions(resolutions)
+        start_resolution = 0
     driver.quit()
     
 if __name__ == "__main__":
