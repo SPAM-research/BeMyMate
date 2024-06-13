@@ -5,16 +5,16 @@ import requests
 import concurrent.futures
 
 
+from constants import BASE_URL
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from bs4 import BeautifulSoup
-from llmHandler import LlmHandler
-from problem import Problem
-from user import User
-from utils import last_message_is_clarification, get_message_for_clarification, last_message_is_suggestion, get_message_for_suggestion, get_definition_block_variable
+from utils.llm_handler import LlmHandler
+from models.problem import Problem
+from models.user import User
+from utils.utils import last_message_is_clarification, get_message_for_clarification, last_message_is_suggestion, get_message_for_suggestion, get_definition_block_variable
 
-base_url = "https://betatutorchat.uv.es"
 agents_collection = 15
 default_sleep = 3
 max_consecutive_helps = 10
@@ -154,7 +154,7 @@ class FakeUser:
         while True:
             try: driver.find_element(By.CSS_SELECTOR, ".message_input_collection.message_input.form-control")
             except:
-                driver.get(f"https://betatutorchat.uv.es/collections")
+                driver.get(f"${BASE_URL}/collections")
                 time.sleep(default_sleep)
                 while True:
                     while True:
@@ -181,7 +181,7 @@ class FakeUser:
         while True:
             if (
                 self.session.put(
-                    f"https://betatutorchat.uv.es/api/wrapper/{str(agents_collection)}",
+                    f"${BASE_URL}/api/wrapper/{str(agents_collection)}",
                     json=json.loads(json.dumps(collection_dict)),
                 ).status_code == 200): break
 
@@ -235,7 +235,7 @@ class FakeUser:
         while True:
             if (
                 self.session.post(
-                    f"{base_url}/api/login",
+                    f"{BASE_URL}/api/login",
                     json={
                         "username": "agent",
                         "password": "agent",
@@ -253,7 +253,7 @@ class FakeUser:
         
         while True:
             wrapper_response = self.session.get(
-                f"{base_url}/api/wrapper/{str(agents_collection)}/problems"
+                f"{BASE_URL}/api/wrapper/{str(agents_collection)}/problems"
             )
             if wrapper_response.status_code == 200:
                 break
@@ -262,7 +262,7 @@ class FakeUser:
         
         while True:
             problem_response = self.session.get(
-                f"{base_url}/api/problems/{str(problem_id)}"
+                f"{BASE_URL}/api/problems/{str(problem_id)}"
             )
             if problem_response.status_code == 200:
                 break
@@ -278,7 +278,7 @@ class FakeUser:
         self.gs = len(self.problem.graphs[0]["paths"])
             
 def login():
-    driver.get("https://betatutorchat.uv.es")
+    driver.get(BASE_URL)
 
     while True:
         try: username_input = driver.find_element(By.ID, "username")

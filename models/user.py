@@ -33,7 +33,7 @@ class User:
             "birth": "0001-01-01",
             "email": self.email,
             "group": None,
-            "language": "spanish",
+            "language": "es-ES",
             "name": "dummy",
             "password": self.password,
             "role": "admin",
