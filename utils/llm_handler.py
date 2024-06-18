@@ -10,45 +10,54 @@ from langchain.callbacks.manager import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.prompts.chat import ChatPromptTemplate
 from langchain.schema import BaseOutputParser
-
+import ast
 import argostranslate.translate
-
-from utils.llm_responder import get_llm_response
+import sympy as sp
+from utils.llm_responder import get_llm_definitions, get_llm_equations, is_response_reasonable
+from models.problem import Problem
+import utils.response_analyzer as response_analyzer
 
 class LlmHandler:
-    def __init__(self, problem):
+    def __init__(self, problem: Problem):
         # Maybe make a small inference to load the model ?
         #self.ollama_process = subprocess.Popen(["./ollama", "serve"])
         self.problem = problem
         self.outputs = []
         self.definitions = []
         self.equations = []
+        self.is_response_reasonable = True
+        self.previous_response_review = ""
         self.llm = ChatOllama(
             model="llama3:latest",
-            #model="stable-beluga:13b-fp16",
+            # model="stable-beluga:13b-fp16",
             #model="mixtral:8x7b-instruct-v0.1-q3_K_L",
             #callback_manager = CallbackManager([StreamingStdOutCallbackHandler()]),
-            temperature=0,
+            temperature=0.6,
         )
 
     def call(self):
-        [equations, definitions] = get_llm_response(self.llm, self.problem)
+        response = ""
+        definitions = get_llm_definitions(self.llm, self.problem, response, self.previous_response_review)
+        filtered_definitions = response_analyzer.definitions_validator(definitions, self.outputs, self.problem.notebook)
 
-        # Random do get equation, definition or message
-        new_definitions = [d.lower() for d in definitions if d[2:].lower() not in self.outputs]
-        new_equations = [e for e in equations if e not in self.outputs]
+        print("filtered_definitions: ", filtered_definitions)
 
-        print("New definitions: ", new_definitions)
-        if new_definitions:
+        if filtered_definitions:
+            response = random.choice(filtered_definitions)
+            self.outputs.append(response[2:].lower())
+        elif len(self.problem.notebook) >= 1 and response == "": # If no new definitions are proposed, generate an equation
+            equations = get_llm_equations(self.llm, self.problem, response, self.previous_response_review)
+            filtered_equations = response_analyzer.equations_validator(equations, self.outputs, self.problem.notebook, self.problem.equations)
+            if filtered_equations:
+                response = random.choice(filtered_equations)
+                self.outputs.append(response)
+        
+        if response == "": 
+            response = "I need help"
 
-            selected = random.choice(new_definitions)
-            print("argostranslate: ",  argostranslate.translate.translate("Hello world", "en", "es"))
-            response = argostranslate.translate.translate(selected, "en", "es")
-            self.outputs.append(selected[2:].lower())
-        elif new_equations:
-            response = random.choice(new_equations)
-            self.outputs.append(response)
-        else: 
-            response = "Necesito ayuda"
+        # TODO: hacer dos funciones is_definition_reasonable y is_equation_reasonable para comprobar la definición de variable o ecuación
+        # if response != "I need help":
+        #     (self.is_response_reasonable, self.previous_response_review)  = is_response_reasonable(self.llm, self.problem, response)
+
 
         return response

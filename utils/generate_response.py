@@ -35,14 +35,15 @@ def get_message_for_suggestion(problem):
     last_message = " ".join([line for line in last_message.split("\n") if line.strip()])
     usable_vars = [v for v in list(string.ascii_lowercase) if v not in [e[0] for e in problem.notebook]]
     random.shuffle(usable_vars)
+    # TODO: traduccion
     if match := re.search("Puedes intentar definir la ecuación.+?(?P<sug>.+=.+)", last_message):
         return match.group("sug") if match else "FAIL IN HANDLING FIRST SUGGESTION"
     elif match := re.search("Puedes definir (?P<var>.+) como (?P<val>.+)", last_message):
         return f"{usable_vars.pop()} es {match.group('var').strip()}" if match else "FAIL IN HANDLING SECOND SUGGESTION"
     elif match := re.search("Puedes intentar definir (?P<var>.+) en función de", last_message):
         return f"{usable_vars.pop()} es {match.group('var')}" if match else "FAIL IN HANDLING THIRD SUGGESTION"
-    elif match := re.search("¿te refieres a .*¿quieres que denotemos.*", last_message, flags=re.DOTALL):
-        return "Si"
+    elif match := re.search("You mean .*? do you want us to.*", last_message, flags=re.DOTALL):
+        return "Yes"
     elif match := re.search("Te sugiero definir una letra para denotar la cantidad (?P<var>.+)", last_message):
         return f"{usable_vars.pop()} es {match.group('var')}" if match else "FAIL IN HANDLING FIFTH SUGGESTION"
     else:

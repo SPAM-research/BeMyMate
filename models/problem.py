@@ -1,5 +1,5 @@
 class Problem:
-    def __init__(self, id, name, text, chat, known_quantities, unknown_quantities, last_suggestion, graphs, notebook, equations, image, initial_help_level, max_resolution_time_in_seconds, uid, video):
+    def __init__(self, id, name, text, chat, known_quantities, unknown_quantities, last_suggestion, graphs, notebook, equations, image, initial_help_level, max_resolution_time_in_seconds, uid, video, final_report):
         self.id = id
         self.name = name
         self.text = text
@@ -15,6 +15,7 @@ class Problem:
         self.max_resolution_time_in_seconds = max_resolution_time_in_seconds
         self.uid = uid
         self.video = video
+        self.final_report = final_report
 
     def __str__(self):
         return {
@@ -33,6 +34,7 @@ class Problem:
             "max_resolution_time_in_seconds": self.max_resolution_time_in_seconds,
             "uid": self.uid,
             "video": self.video,
+            "final_report": self.final_report
         }.__str__()
 
     @classmethod
@@ -52,5 +54,6 @@ class Problem:
             initial_help_level=dict_obj.get("initialHelpLevel", 0),
             max_resolution_time_in_seconds=dict_obj.get("maxResolutionTimeInSeconds", -100),
             uid=dict_obj.get("uid", ""),
-            video=dict_obj.get("video", "")
+            video=dict_obj.get("video", ""),
+            final_report=dict_obj.get("finalReport", None)
         )
