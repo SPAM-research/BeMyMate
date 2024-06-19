@@ -13,7 +13,7 @@ from langchain.schema import BaseOutputParser
 import ast
 import argostranslate.translate
 import sympy as sp
-from utils.llm_responder import get_llm_definitions, get_llm_equations, is_response_reasonable
+from utils.llm_responder import get_llm_definitions, get_llm_equations, get_llm_conversational_response, should_llm_speak_with_student
 from models.problem import Problem
 import utils.response_analyzer as response_analyzer
 
@@ -37,8 +37,10 @@ class LlmHandler:
         )
 
     def call(self):
-        should_response_resolve = should_response_resolve(self.problem)
+        last_message: str = self.problem.chat[-1]["message"] 
         response = ""
+        if (last_message.startswith("!") and should_llm_speak_with_student(self.llm, self.problem.chat)): # conversational message send by the (real) student
+            return "!" + get_llm_conversational_response(self.llm, self.problem)
         definitions = get_llm_definitions(self.llm, self.problem, response, self.previous_response_review)
         filtered_definitions = response_analyzer.definitions_validator(definitions, self.outputs, self.problem.notebook)
 

@@ -49,6 +49,32 @@ Take into account that equations must include variables that are defined in [VAR
 [Message]
 """
 
+instructions_conversational = """
+Please act as a kid. You are going to solve MWP problems with another student. You will be provided with the current
+resolution status of the problem. Your response must be adjusted to the message sent by the user. You will respond to [LAST MESSAGE] as a kid.
+You are provided with the [PROBLEM STATEMENT], [VARIABLES] and [EQUATIONS], the objective is to define the equations and variables that allow to solve the problem.
+Your output must be KID: <message>. DO NOT SOLVE THE PROBLEM. You want to solve the problem but remember you are a 7 year old kid who just learnt maths, so these are difficult problems for you
+
+[Message]
+"""
+
+instructions_should_speak = """
+Please act as an impartial judge and evaluate the messages of the [CHAT].
+The [CHAT] contains messages from a collaborative ITS, on which students chat with other students and the system in order
+to solve MWP.
+Given the context, specially the messages sent by users (not 'system' and not 'agent'), you must decide 
+whether the message which is going to be sent by 'agent' has to solve the MWP (define a variables or an equation) or 
+converse with the kid.
+You are provided with the last message sent by the human user on [LAST_MESSAGE_USER]
+Be as objective as possible.
+Your output verdict must strictly follow this format:
+"True" if the agent has to answer to the student, because the student asked a question, said a reasonable thought, and so on.
+"False" if the agent has to advance the resolution of the MWP. This might be because the student is proposing solutions to advance the MWP (you can infere if the MWP is advancing by analizing the response of the system on [SYSTEM_RESPONSE]) or the SYSTEM_RESPONSE is providing help.
+
+
+[Message]
+"""
+
 """ Add an explicit multiplication sign if needed for each equation."""
 def add_multiplication_sign(equations: list[str]) -> list[str]:
     modified_equations = []
@@ -168,6 +194,61 @@ def construct_chat_history(chat):
         output += f"{e['sender']}: {e['message']}\n"
     #print(output)
     return output
+
+def should_llm_speak_with_student(llm: ChatOllama, chat: list) -> bool:
+    last_message_by_user = next((message["message"] for message in reversed(chat) if message["sender"] not in {"agent", "system"}), "")
+    last_message_by_system = next((message["message"] for message in reversed(chat) if message["sender"] == "system"), "")
+    problem_layout = f"""
+    [CHAT]: '{chat}'
+    [LAST_MESSAGE_USER]: '{last_message_by_user}'
+    [SYSTEM_RESPONSE]: '{last_message_by_system}
+    """
+
+    prompt = ChatPromptTemplate.from_messages([
+        ("system", "{system_input}"),
+        ("human", "{human_input}"),
+    ])
+
+    chain = prompt | llm
+
+    llm_output = chain.invoke(
+        {"system_input": instructions_should_speak, "human_input": problem_layout}
+    ).content
+    preprocessed = unidecode(llm_output).strip()
+
+    if re.search(".*True|true.*", preprocessed):
+        print(f"AGENT MUST SPEAK WITH USER")
+        return True
+    else:
+        print(f"AGENT MUST SOLVE THE MWP")
+        return False
+
+
+""" When a conversational message is sent to the system, the agent should respond as a student, instead of aiming to
+resolve the problem on its own """
+def get_llm_conversational_response(llm: ChatOllama, problem: Problem):
+    last_collaborative_message_by_user = next((message["message"] for message in reversed(problem.chat) if message["sender"] not in {"agent", "system"}), "")
+    problem_layout = f"""
+    Current status of mathematical problem:
+    [PROBLEM STATEMENT]: '{problem.text}'
+    [VARIABLES]: '{", ".join(problem.notebook)}'
+    [EQUATIONS]: '{", ".join(problem.equations)}'
+    [CONVERSATION]: '{problem.chat}'
+    [LAST MESSAGE SENT BY YOUR PARTNER]: '{last_collaborative_message_by_user}'
+    """
+    print(f"[LAST MESSAGE]: '{problem.chat[-1]["message"]}")
+    prompt = ChatPromptTemplate.from_messages([
+        ("system", "{system_input}"),
+        ("human", "{human_input}"),
+    ])
+
+    chain = prompt | llm
+
+    llm_output = chain.invoke(
+        {"system_input": instructions_conversational, "human_input": problem_layout}
+    ).content
+
+    return llm_output
 
 """ The LLM may hallucinate sometimes and/or get stuck, sending the same message over and over.
 The aim of this function is to provide the LLM with the message which is going to be sent, substituting the 

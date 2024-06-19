@@ -15,7 +15,7 @@ import utils.process_message_utils as process_message_utils
 import config.config as config
 import multiprocessing as mp
 from models.message import Message
-
+import os
 def read_message(queue: mp.Queue) -> str:
     while True:
         # print(queue.get().problem.chat[-1]["message"])
@@ -26,8 +26,8 @@ token = requests.post(
     f"{BASE_URL}/api/login",
     #"https://tutorchat.uv.es/api/login",
     json={
-        "username": "agent",
-        "password": "agent",
+        "username": os.getenv("AGENT_USERNAME"),
+        "password": os.getenv("AGENT_PASSWORD"),
         "timeZone": "Europe/Madrid",
         "lastConnection": 0,
     },
@@ -94,20 +94,20 @@ class RoomListener(stomp.ConnectionListener):
                 room_uuid = frame.body.split(":")[1]
                 self.connection.subscribe(f"/topic/room-{room_uuid}", len(self.agent_map) + 1)
                 self.agent_map[f"/topic/room-{room_uuid}"] = None
-                frame.body = requests.get(
-                    url=f"{BASE_URL}/api/chat/{room_uuid}",
-                    params={
-                        "wrapperId": 5,
-                        "exerciseId": 0,
-                        "next": "false"
-                    },
-                    headers={
-                        "Authorization": token
-                    }
-                ).content
-                problem: Problem = get_problem(frame)
-                message: Message = Message(room_uuid, problem)
-                self.queue.put(message)
+                # frame.body = requests.get(
+                #     url=f"{BASE_URL}/api/chat/{room_uuid}",
+                #     params={
+                #         "wrapperId": 5,
+                #         "exerciseId": 0,
+                #         "next": "false"
+                #     },
+                #     headers={
+                #         "Authorization": token
+                #     }
+                # ).content
+                # problem: Problem = get_problem(frame)
+                # message: Message = Message(room_uuid, problem)
+                # self.queue.put(message)
 
         if re.match(r"/topic/room-", message_topic_destination):
             room_uuid = message_topic_destination.split("-", 1)[1]
