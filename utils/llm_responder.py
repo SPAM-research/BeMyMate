@@ -18,14 +18,14 @@ debug = False
 # 3- Each equation only uses previously introduced variables. 
 # 4- Each quantity is only named by one variable.
 # mistral
-instructions_mistral = "Given a problem, variables and equations, define an equation that hasn't been defined. Do not solve the problem. Your output must only be an equation. Use '*' as the multiplication operator. Follow the suggestion."
+instructions_mistral = "Given a problem, variables and equations, define an equation that hasn't been defined. Do not solve the problem. Your output must only be an equation. Follow the suggestion."
 
 # stable-beluga
 instructions_stable_beluga_definitions = "Please, given a [PROBLEM STATEMENT] and [VARIABLES], define all the remaining variables (for example, 'x is number of apples'). Do not solve the problem. Each line of your output must contain a variable definition. Follow the suggestion. HINT: The needed [VARIABLES] are present on the problem statement."
-instructions_stable_beluga_equations = "Please, given a [PROBLEM STATEMENT], [VARIABLES] and [EQUATIONS], define all the remaining [EQUATIONS]. Do not solve the problem. Each line of your output must contain an equation. Use '*' as the multiplication operator. Follow the suggestion."
+instructions_stable_beluga_equations = "Please, given a [PROBLEM STATEMENT], [VARIABLES] and [EQUATIONS], define all the remaining [EQUATIONS]. Do not solve the problem. Each line of your output must contain an equation. Follow the suggestion."
 
 # mixtral
-instructions_mixtral = """Given a problem, variables and equations, define all the remaining variables and equations. Each line of your output must contain a variable definition or an equation. A variable definition is '<letter> is <definition>'. An equations is '<letter> = <expression>'. Use '*' as the multiplication operator. Follow the suggestion. Do not explain the variable definitions or the equations. Your output should have the following format:
+instructions_mixtral = """Given a problem, variables and equations, define all the remaining variables and equations. Each line of your output must contain a variable definition or an equation. A variable definition is '<letter> is <definition>'. An equations is '<letter> = <expression>'. Follow the suggestion. Do not explain the variable definitions or the equations. Your output should have the following format:
 x is number of oranges
 y is number of apples
 z is number of fruits
@@ -55,6 +55,8 @@ def add_multiplication_sign(equations: list[str]) -> list[str]:
     for expression in equations:
         modified_expression = expression
         # Add explicit multiplication symbol in expressions such as 2(x-6) or x(y+2)
+        modified_expression = re.sub(r'([a-zA-Z])(\d+)', r'\1*\2', modified_expression)  # Letter followed by a number
+        modified_expression = re.sub(r'(\d+)([a-zA-Z])', r'\1*\2', modified_expression)  # Number followed by a letter
         modified_expression = re.sub(r'(\d+)(\()', r'\1*\2', modified_expression)  # Number followed by a parenthesis
         modified_expression = re.sub(r'([a-zA-Z])(\()', r'\1*\2', modified_expression)  # Letter followed by a parenthesis
         modified_expression = re.sub(r'(\))(\d+)', r'\1*\2', modified_expression)  # Parenthesis followed by a number
@@ -212,8 +214,6 @@ def get_llm_equations(llm, problem: Problem, previous_response: str, previous_re
     [PROBLEM STATEMENT]: '{problem.text}'
     [VARIABLES]: '{", ".join(problem.notebook)}'
     [EQUATIONS]: '{", ".join(problem.equations)}'
-    [YOUR PREVIOUS RESPONSE]: {previous_response},
-    [SUGGESTION TO YOUR PREVIOUS RESPONSE]: {problem.last_suggestion}
     """
     # if (previous_response != "" and previous_response_review != ""):
     #     problem_layout = problem_layout + f"""This was your previous response: '{previous_response}'

@@ -94,11 +94,26 @@ class RoomListener(stomp.ConnectionListener):
                 room_uuid = frame.body.split(":")[1]
                 self.connection.subscribe(f"/topic/room-{room_uuid}", len(self.agent_map) + 1)
                 self.agent_map[f"/topic/room-{room_uuid}"] = None
-                
+                frame.body = requests.get(
+                    url=f"{BASE_URL}/api/chat/{room_uuid}",
+                    params={
+                        "wrapperId": 5,
+                        "exerciseId": 0,
+                        "next": "false"
+                    },
+                    headers={
+                        "Authorization": token
+                    }
+                ).content
+                problem: Problem = get_problem(frame)
+                message: Message = Message(room_uuid, problem)
+                self.queue.put(message)
 
         if re.match(r"/topic/room-", message_topic_destination):
             room_uuid = message_topic_destination.split("-", 1)[1]
             if frame.body == RESET:
+                while not self.queue.empty():
+                    self.queue.get()
                 self.connection.unsubscribe(id=frame.headers["subscription"]) # room is deleted. Unsubscribe from such room
                 print(f"unsubscribing from {message_topic_destination}")
                 return
@@ -114,14 +129,14 @@ class RoomListener(stomp.ConnectionListener):
                 # time.sleep(1)
                 # requests.get(
                 #     url=f"{BASE_URL}/api/chat/{room_uuid}",
-                #     params={
-                #         "wrapperId": 6,
-                #         "exerciseId": self.current_exercise,
-                #         "next": "true"
-                #     },
-                #     headers={
-                #         "Authorization": token
-                #     }
+                    # params={
+                    #     "wrapperId": 6,
+                    #     "exerciseId": self.current_exercise,
+                    #     "next": "true"
+                    # },
+                    # headers={
+                    #     "Authorization": token
+                    # }
                 # )
                 self.current_exercise = self.current_exercise + 1
                 return
@@ -140,7 +155,7 @@ def main():
     conn.connect("admin", "admin", wait=True)
     conn.subscribe("/topic/agents", 0)
     # Cmd is used to ensure the app keeps running 
-    # Otherwise, stomp connections would be closed
+    # Otherwise, the program would finish and stomp connections would be closed
     cmd = Cmd()
     signal.signal(signal.SIGINT, lambda x,y: conn.disconnect())
 

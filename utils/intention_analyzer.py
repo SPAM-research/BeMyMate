@@ -1,5 +1,7 @@
 import re
 
+from models.problem import Problem
+
 
 """ This function determines if the last chat message provides options to discern
 the type of message. If the last chat message starts 

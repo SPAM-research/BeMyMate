@@ -55,6 +55,8 @@ def get_message_for_suggestion(problem):
         #DONE
         #print("HANDLING THIRD SUGGESTION")
         return f"{usable_vars.pop()} es {match.group('var')}" if match else "FAIL IN HANDLING THIRD SUGGESTION"
+    elif match := re.search("You can try to define an equation using the relation"):
+        return "<CALL LLM>" # pass TODO: help
     elif match := re.search("¿te refieres a .*¿quieres que denotemos.*", last_message, flags=re.DOTALL):
         # DONE
         #print("HANDLING FOURTH SUGGESTION")

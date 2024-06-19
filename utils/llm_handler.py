@@ -22,6 +22,7 @@ class LlmHandler:
         # Maybe make a small inference to load the model ?
         #self.ollama_process = subprocess.Popen(["./ollama", "serve"])
         self.problem = problem
+
         self.outputs = []
         self.definitions = []
         self.equations = []
@@ -36,6 +37,7 @@ class LlmHandler:
         )
 
     def call(self):
+        should_response_resolve = should_response_resolve(self.problem)
         response = ""
         definitions = get_llm_definitions(self.llm, self.problem, response, self.previous_response_review)
         filtered_definitions = response_analyzer.definitions_validator(definitions, self.outputs, self.problem.notebook)

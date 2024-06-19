@@ -16,8 +16,8 @@ def process_message(room_uuid: str, problem: Problem):
     # TODO: check if sender is different from the username assigned to agent
     # print(problem.chat[-1]["message"])
     if problem.chat[-1]["sender"] == "agent": # if last message is from the agent, do nothing until tutor answers back
-        return
-
+        return 
+    response = ""
     llm_handler: LlmHandler = LlmHandler(problem)
 
     if is_message_a_choice(problem):

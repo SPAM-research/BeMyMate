@@ -20,6 +20,7 @@ def equations_validator (equations: list[str], outputs: list[str], notebook: lis
     notebook_letters = [item.split(' es ', 1)[0] for item in notebook]
     new_filtered_equations = []
     for equation in new_equations:
+        equation = equation.replace('`', '')
         letters_in_equation = set(re.findall(r'[a-zA-Z]', equation))
         if letters_in_equation.issubset(notebook_letters) and equation not in notebook_equations and '?' not in equation:
             new_filtered_equations.append(equation)
@@ -35,7 +36,7 @@ def equations_validator (equations: list[str], outputs: list[str], notebook: lis
             else:
                 sp.sympify(equation)
             valid_equations.append(equation)
-        except (sp.SympifyError, SyntaxError):
+        except (Exception):
             # Mathematical expression not valid
             pass
     
