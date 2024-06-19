@@ -13,9 +13,9 @@ chmod u+x install.sh
 
 ## Usage
 
-- Run the server: `./ollama serve`
-- Get a model from the [library](https://ollama.ai/library): `./ollama pull llama2:13-chat`
-- Run Tutorchat: `python3 messageHandler.py` and enjoy the agents.
+- Run the ollama server
+- Get a model from the [library](https://ollama.ai/library): `ollama pull llama3:latest`
+- Run the app: `python3 main.py` and enjoy the agents.
 
 ## Style Guide
 
