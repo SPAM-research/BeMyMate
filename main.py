@@ -141,6 +141,8 @@ class RoomListener(stomp.ConnectionListener):
                 self.current_exercise = self.current_exercise + 1
                 return
             message: Message = Message(room_uuid, problem)
+            while not self.queue.empty(): # agent should only respond to the previous message, otherwise they'd accumulate and give a sensation of delay
+                self.queue.get()
             self.queue.put(message)
 
 

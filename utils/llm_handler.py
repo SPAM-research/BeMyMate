@@ -40,7 +40,9 @@ class LlmHandler:
         last_message: str = self.problem.chat[-1]["message"] 
         response = ""
         if (last_message.startswith("!") and should_llm_speak_with_student(self.llm, self.problem.chat)): # conversational message send by the (real) student
+            time.sleep(random.randrange(2, 6, 1))
             return "!" + get_llm_conversational_response(self.llm, self.problem)
+        time.sleep(random.randrange(5, 10, 1))
         definitions = get_llm_definitions(self.llm, self.problem, response, self.previous_response_review)
         filtered_definitions = response_analyzer.definitions_validator(definitions, self.outputs, self.problem.notebook)
 
