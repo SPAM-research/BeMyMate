@@ -24,7 +24,6 @@ def read_message(queue: mp.Queue) -> str:
 
 token = requests.post(
     f"{BASE_URL}/api/login",
-    #"https://tutorchat.uv.es/api/login",
     json={
         "username": os.getenv("AGENT_USERNAME"),
         "password": os.getenv("AGENT_PASSWORD"),
@@ -137,7 +136,7 @@ def main():
     read_process.start()
     conn = stomp.Connection([("localhost", 61613)])
     conn.set_listener('', RoomListener(conn, queue ))
-    conn.connect("admin", "admin", wait=True)
+    conn.connect(os.getenv("CONNECTION_USERNAME"), os.getenv("CONNECTION_PASSWORD"), wait=True)
     conn.subscribe("/topic/agents", 0)
     # Cmd is used to ensure the app keeps running 
     # Otherwise, the program would finish and stomp connections would be closed
