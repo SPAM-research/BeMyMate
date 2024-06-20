@@ -1,3 +1,4 @@
+import os
 import time
 import json
 import re
@@ -237,8 +238,8 @@ class FakeUser:
                 self.session.post(
                     f"{BASE_URL}/api/login",
                     json={
-                        "username": "agent",
-                        "password": "agent",
+                        "username": os.getenv("AGENT_USERNAME"),
+                        "password": os.getenv("AGENT_PASSWORD"),
                         "timeZone": "Europe/Madrid",
                         "lastConnection": 0,
                     },

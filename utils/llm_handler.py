@@ -61,9 +61,4 @@ class LlmHandler:
         if response == "": 
             response = "I need help"
 
-        # TODO: hacer dos funciones is_definition_reasonable y is_equation_reasonable para comprobar la definición de variable o ecuación
-        # if response != "I need help":
-        #     (self.is_response_reasonable, self.previous_response_review)  = is_response_reasonable(self.llm, self.problem, response)
-
-
         return response

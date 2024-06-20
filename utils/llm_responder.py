@@ -248,7 +248,7 @@ def get_llm_conversational_response(llm: ChatOllama, problem: Problem):
         {"system_input": instructions_conversational, "human_input": problem_layout}
     ).content
 
-    return llm_output
+    return llm_output.split("KID:", 1)[1]
 
 """ The LLM may hallucinate sometimes and/or get stuck, sending the same message over and over.
 The aim of this function is to provide the LLM with the message which is going to be sent, substituting the 

@@ -38,7 +38,6 @@ def get_message_for_suggestion(problem):
     notebook_letters = [item.split(' es ', 1)[0] for item in problem.notebook]
     notebook_descriptions = [item.split(' es ', 1)[1] for item in problem.notebook]
     random.shuffle(usable_vars)
-    # TODO: traduccion
     if match := re.search("You can try to define an equation using using .+?(?P<sug>.+=.+)", last_message):
         return match.group("sug") if match else "FAIL IN HANDLING FIRST SUGGESTION"
     elif match := re.search("You may try to define \r<br /> (?P<var>.*)\r<br /> as (?!(?:a function of)) (?P<equation>.*)", last_message):

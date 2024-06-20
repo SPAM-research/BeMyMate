@@ -117,27 +117,10 @@ class RoomListener(stomp.ConnectionListener):
                 self.connection.unsubscribe(id=frame.headers["subscription"]) # room is deleted. Unsubscribe from such room
                 print(f"unsubscribing from {message_topic_destination}")
                 return
-                #TODO: clear queue of all messages related to deleted room 
-                # while not self.queue.empty(): # clear queue
-                #     self.queue.get()
-            # else: queue message
             problem: Problem = get_problem(frame)
             if problem.final_report is not None: # if problem has been solved
                 while not self.queue.empty():
                     self.queue.get()
-                # TODO: refactor backend para que no haya que pasar manualmente el exerciseId
-                # time.sleep(1)
-                # requests.get(
-                #     url=f"{BASE_URL}/api/chat/{room_uuid}",
-                    # params={
-                    #     "wrapperId": 6,
-                    #     "exerciseId": self.current_exercise,
-                    #     "next": "true"
-                    # },
-                    # headers={
-                    #     "Authorization": token
-                    # }
-                # )
                 self.current_exercise = self.current_exercise + 1
                 return
             message: Message = Message(room_uuid, problem)
