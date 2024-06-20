@@ -1,14 +1,12 @@
-from langchain.chat_models import ChatOllama
-from langchain.callbacks.manager import CallbackManager
-from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
-from langchain.prompts.chat import ChatPromptTemplate
-from langchain.schema import BaseOutputParser
-
 import re
 import string
+
 import argostranslate.translate
-
-
+from langchain.callbacks.manager import CallbackManager
+from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
+from langchain.chat_models import ChatOllama
+from langchain.prompts.chat import ChatPromptTemplate
+from langchain.schema import BaseOutputParser
 
 already_defined_variables = []
 variable_names = list(string.ascii_lowercase)
@@ -33,7 +31,7 @@ def get_variable_definition(llm, problem):
             break
         output = get_llm_output(llm, problem, instructions[i])
         if output != "":
-            #return "No sé que hacer..."
+            # return "No sé que hacer..."
             break
         i += 1
     return clean_output(problem, output)
@@ -58,7 +56,7 @@ def get_llm_output(llm, problem, instructions):
     chain = prompt | llm
     llm_output = chain.invoke({}).content
 
-    return(llm_output)
+    return llm_output
 
 
 def clean_output(problem, output):
@@ -66,7 +64,7 @@ def clean_output(problem, output):
 
     global already_defined_variables
     already_defined_variables = [e[0] for e in problem.notebook]
-    
+
     cleaned = output_lines
     cleaned = list(map(remove_beginning_whitespaces, cleaned))
     cleaned = list(filter(filter_operations, cleaned))
@@ -89,15 +87,20 @@ def clean_output(problem, output):
     return output
 
 
-
 """ ################################
     Cleaning and filtering functions
     ################################ """
 
+
 def clean_represents(i):
     match = re.search(r".+?(\"|\') represents.*?(?:,|\.|\n|$)", i)
     if match:
-        var_name = re.search(r"(\"|\').+?(\"|\')", match.group(0)).group(0).replace('"', "").replace("'", "")
+        var_name = (
+            re.search(r"(\"|\').+?(\"|\')", match.group(0))
+            .group(0)
+            .replace('"', "")
+            .replace("'", "")
+        )
         definition = (
             re.sub(r".+? represents ", "", match.group(0))
             .replace(",", "")
@@ -164,7 +167,7 @@ def clean_asterisk_var_colon(i):
             .replace(" ", "")
             .replace("*", "")
             .replace("'", "")
-            .replace("\"", "")
+            .replace('"', "")
         )
         definition = (
             re.sub(r"\*.+?(\"|\').+?(\"|\') is ", "", match.group(0))
@@ -180,6 +183,7 @@ def clean_asterisk_var_colon(i):
             return f"{var} is {definition}"
     else:
         return i
+
 
 def clean_var_colon(i):
     match = re.search(r"\*.+?:.*?(?:,|\.|\n|$)", i)
@@ -205,7 +209,7 @@ def clean_var_colon(i):
             return f"{var} is {definition}"
     else:
         return i
- 
+
 
 def clean_dash_var(i):
     match = re.search(r"-.+?:.*?(?:,|\.|\n|$)", i)
@@ -232,6 +236,7 @@ def clean_dash_var(i):
     else:
         return i
 
+
 def clean_var_equals(i):
     match = re.search(r"\*.+?=.*?(?:,|\.|\n|$)", i)
     if match:
@@ -257,13 +262,14 @@ def clean_var_equals(i):
     else:
         return i
 
+
 def clean_variable_is(i):
     match = re.search(r"The variable (\"|\').+?(\"|\') is .*?(?:,|\.|\n|$)", i)
     if match:
         var_name = (
             re.search(r"(\"|\').+?(\"|\')", match.group(0))
             .group(0)
-            .replace("\"", "")
+            .replace('"', "")
             .replace("'", "")
         )
         definition = (
@@ -280,6 +286,7 @@ def clean_variable_is(i):
             return f"{var} is {definition}"
     else:
         return i
+
 
 def filter_operations(l):
     return (
@@ -302,11 +309,8 @@ def filter_input_or_empty(l):
 
 
 def filter_redundant(l):
-    return (
-        not re.search(r"^where", l)
-        and not ":" in l
-        and not "=" in l
-    )
+    return not re.search(r"^where", l) and not ":" in l and not "=" in l
+
 
 def filter_unwanted(l):
     return (
@@ -323,4 +327,3 @@ def filter_unwanted(l):
 
 def remove_beginning_whitespaces(l):
     return re.sub(r"^\s*", "", l)
-

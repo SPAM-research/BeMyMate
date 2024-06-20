@@ -4,53 +4,40 @@ import multiprocessing as mp
 import os
 import re
 import signal
-import time
 from cmd import Cmd
-from threading import Thread
 from typing import Dict
 
-import config.config as config
+from .config import config
 import requests
 import stomp
-from models.message import Message
-from models.problem import Problem
 from stomp.utils import Frame
 
-import utils.process_message_utils as process_message_utils
-from constants import BASE_URL, RESET, ROOM_CREATED
+from .utils.process_message_utils import process_message
+from .constants import BASE_URL, RESET, ROOM_CREATED
+
+from .models import Message, Problem
+from .utils.utils import login
 
 
 def read_message(queue: mp.Queue) -> str:
+    """
+    Infinite process that consumes a multiprocessing queue and processes the messages in order
+    """
     while True:
-        # print(queue.get().problem.chat[-1]["message"])
         message: Message = queue.get()
-        process_message_utils.process_message(message.room_uuid, message.problem)
+        process_message(message.room_uuid, message.problem)
 
 
-token = requests.post(
-    f"{BASE_URL}/api/login",
-    json={
-        "username": os.getenv("AGENT_USERNAME"),
-        "password": os.getenv("AGENT_PASSWORD"),
-        "timeZone": "Europe/Madrid",
-        "lastConnection": 0,
-    },
-).json()["access_token"]
-
-
-def get_problem(frame):
+def get_problem(frame: Frame):
     problem_chat_data = json.loads(frame.body)
-    problem_chat = Problem.from_dict(
-        problem_chat_data["problem"]
+    problem_chat = Problem(
+        **problem_chat_data["problem"]
     )  # Retrieve Problem object (text, notebooks, etc.)
-    problem_chat.final_report = Problem.from_dict(problem_chat_data).final_report
+    problem_chat.final_report = Problem(**problem_chat_data).final_report
     problem_graph_response = requests.get(
-        f"{BASE_URL}/api/problems/{problem_chat.id}", headers={"Authorization": token}
+        f"{BASE_URL}/api/problems/{problem_chat.id}", headers={"Authorization": login()}
     )
     problem_graph_data = json.loads(problem_graph_response.content)
-    problem_graph = Problem.from_dict(
-        problem_graph_data
-    )  # Retrieve Problem Graph object (KnownQuantities, UnknownQuantities, etc.)
 
     problem = Problem(
         id=problem_chat.id,
@@ -91,31 +78,19 @@ class RoomListener(stomp.ConnectionListener):
         print(f"ERROR: {frame.body}")
 
     def on_message(self, frame: Frame):
-
         message_topic_destination = frame.headers["destination"]
 
-        if message_topic_destination == "/topic/agents":
-            if frame.body.startswith(ROOM_CREATED):
-                room_uuid = frame.body.split(":")[1]
-                self.connection.subscribe(
-                    f"/topic/room-{room_uuid}", len(self.agent_map) + 1
-                )
-                self.agent_map[f"/topic/room-{room_uuid}"] = None
-                # frame.body = requests.get(
-                #     url=f"{BASE_URL}/api/chat/{room_uuid}",
-                #     params={
-                #         "wrapperId": 5,
-                #         "exerciseId": 0,
-                #         "next": "false"
-                #     },
-                #     headers={
-                #         "Authorization": token
-                #     }
-                # ).content
-                # problem: Problem = get_problem(frame)
-                # message: Message = Message(room_uuid, problem)
-                # self.queue.put(message)
+        if message_topic_destination == "/topic/agents" and frame.body.startswith(
+            ROOM_CREATED
+        ):
 
+            room_uuid = frame.body.split(":")[1]
+            self.connection.subscribe(
+                f"/topic/room-{room_uuid}", len(self.agent_map) + 1
+            )
+            self.agent_map[f"/topic/room-{room_uuid}"] = None
+            return
+        
         if re.match(r"/topic/room-", message_topic_destination):
             room_uuid = message_topic_destination.split("-", 1)[1]
             if frame.body == RESET:
@@ -126,6 +101,7 @@ class RoomListener(stomp.ConnectionListener):
                 )  # room is deleted. Unsubscribe from such room
                 print(f"unsubscribing from {message_topic_destination}")
                 return
+            
             problem: Problem = get_problem(frame)
             if problem.final_report is not None:  # if problem has been solved
                 while not self.queue.empty():
@@ -137,7 +113,7 @@ class RoomListener(stomp.ConnectionListener):
                 not self.queue.empty()
             ):  # agent should only respond to the previous message, otherwise they'd accumulate and give a sensation of delay
                 self.queue.get()
-            self.queue.put(message)
+            self.queue.put_nowait(message)
 
 
 def main():

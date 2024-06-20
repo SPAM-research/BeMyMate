@@ -12,9 +12,7 @@ class User:
     def __init__(self, session):
         # Get new user's random info
         while True:
-            user_info_response = session.get(
-                "https://randomuser.me/api/1.4/?nat=es"
-            )
+            user_info_response = session.get("https://randomuser.me/api/1.4/?nat=es")
             if user_info_response.status_code == 200:
                 break
         user_dict = json.loads(user_info_response.text)["results"][0]
